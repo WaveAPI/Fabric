@@ -1,9 +1,6 @@
 package org.waveapi.api;
 
-import org.apache.logging.slf4j.Log4jLogger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.LoggerFactoryFriend;
-import org.waveapi.Main;
 
 public class Logger {
 
