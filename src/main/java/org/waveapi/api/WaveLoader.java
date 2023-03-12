@@ -3,7 +3,7 @@ package org.waveapi.api;
 import net.fabricmc.loader.api.FabricLoader;
 import org.waveapi.Main;
 import org.waveapi.utils.ByteUtils;
-import org.yaml.snakeyaml.Yaml;
+import org.waveapi.utils.Yaml;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,8 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.zip.ZipFile;
 
 public class WaveLoader {
 
@@ -55,10 +55,19 @@ public class WaveLoader {
 
         for (File mod : mods) {
             try {
+                if (!mod.getName().endsWith(".jar")) {
+                    continue;
+                }
+                ZipFile file = new ZipFile(mod);
+
+                if (file.getEntry("/wave.yml") != null) {
+                    return;
+                }
+
                 URL[] urls = new URL[] {mod.toURI().toURL()};
                 URLClassLoader classLoader = new URLClassLoader(urls, WaveLoader.class.getClassLoader());
 
-                URL yml = classLoader.getResource("mod.yml");
+                URL yml = classLoader.getResource("wave.yml");
                 if (yml == null) {
                     continue;
                 }
