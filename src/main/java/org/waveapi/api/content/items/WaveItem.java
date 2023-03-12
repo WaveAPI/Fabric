@@ -1,23 +1,17 @@
 package org.waveapi.api.content.items;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnderPearlItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
 import org.waveapi.api.misc.Side;
 import org.waveapi.api.world.entity.living.EntityPlayer;
 import org.waveapi.api.world.inventory.ItemUseResult;
+import org.waveapi.api.world.inventory.UseHand;
 import org.waveapi.content.items.CustomItemWrap;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
-import org.waveapi.api.world.inventory.UseHand;
 
 import java.util.LinkedList;
 

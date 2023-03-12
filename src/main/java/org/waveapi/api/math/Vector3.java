@@ -1,7 +1,6 @@
 package org.waveapi.api.math;
 
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 
 public class Vector3 {
 

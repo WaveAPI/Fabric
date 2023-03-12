@@ -1,6 +1,5 @@
 package org.waveapi.api.world.inventory;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.TypedActionResult;
 

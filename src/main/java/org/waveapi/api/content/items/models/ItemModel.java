@@ -1,6 +1,5 @@
 package org.waveapi.api.content.items.models;
 
-import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.WaveItem;
 
 import java.io.File;

@@ -1,12 +1,10 @@
 package org.waveapi.content.resources;
 
 import org.waveapi.Main;
-import org.waveapi.api.WaveLoader;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Map;
 
 public class ResourcePackManager {
     private static ResourcePackManager instance;
