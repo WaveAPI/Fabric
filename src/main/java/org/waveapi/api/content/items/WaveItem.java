@@ -49,10 +49,16 @@ public class WaveItem {
         return id;
     }
 
-    public void setModel(ItemModel model) {
+    public WaveItem setModel(ItemModel model) {
         if (Side.isClient() && bake) {
             model.build(ResourcePackManager.getInstance().getPackDir(), this);
         }
+        return this;
+    }
+
+    public WaveItem setTab(WaveTab tab) {
+        settings.group(tab.group);
+        return this;
     }
 
     public WaveMod getMod() {
@@ -63,13 +69,15 @@ public class WaveItem {
         return item;
     }
 
-    public void addTranslation(String language, String name) {
+    public WaveItem addTranslation(String language, String name) {
         if (Side.isClient() && bake) {
             LangManager.addTranslation(mod.name, language, "item." + mod.name + "." + id, name);
         }
+        return this;
     }
-    public void setMaxStackSize(int size) {
+    public WaveItem setMaxStackSize(int size) {
         settings.maxCount(size);
+        return this;
     }
 
 
