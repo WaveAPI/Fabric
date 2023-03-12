@@ -24,9 +24,9 @@ public class WaveItem {
         this.id = id;
         this.mod = mod;
 
-        item = Registry.register(Registry.ITEM, new Identifier(mod.name, id), new Item(new Item.Settings()));
-
-
+        item = Registry.register(Registry.ITEM, new Identifier(mod.name, id),
+                new Item(new Item.Settings().maxCount(getMaxStackSize())
+                ));
 
     }
 
@@ -53,4 +53,7 @@ public class WaveItem {
             LangManager.addTranslation(mod.name, language, "item." + mod.name + "." + id, name);
         }
     }
+    public int getMaxStackSize() {return 64;}
+
+
 }
