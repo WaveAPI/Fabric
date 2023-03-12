@@ -13,9 +13,12 @@ import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
 import org.waveapi.api.misc.Side;
 import org.waveapi.api.world.inventory.ItemUseResult;
+import org.waveapi.content.items.CustomItemWrap;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
 import org.waveapi.api.world.inventory.UseHand;
+
+import java.util.LinkedList;
 
 import static org.waveapi.Main.bake;
 
@@ -23,37 +26,24 @@ public class WaveItem {
     private final String id;
     private final WaveMod mod;
 
-    private final Item item;
+    private Item item;
+
+    private final Item.Settings settings;
+
+    private static LinkedList<WaveItem> toRegister = new LinkedList<>();
+    public static void register() {
+        for (WaveItem item : toRegister) {
+            item.item = Registry.register(Registry.ITEM, new Identifier(item.mod.name, item.id), new CustomItemWrap(item.settings, item));
+        }
+        toRegister = null;
+    }
 
     public WaveItem(String id, WaveMod mod) {
         this.id = id;
         this.mod = mod;
+        this.settings = new Item.Settings();
 
-        item = Registry.register(Registry.ITEM, new Identifier(mod.name, id),
-                new Item(new Item.Settings().maxCount(getMaxStackSize())) {
-                    @Override
-                    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-                        ItemStack item;
-                        UseHand useHand;
-                        if (hand == Hand.MAIN_HAND) {
-                            item = user.getMainHandStack();
-                            useHand = UseHand.MAIN_HAND;
-                        } else {
-                            item = user.getOffHandStack();
-                            useHand = UseHand.OFF_HAND;
-                        }
-
-                        ItemUseResult result = onUse(new org.waveapi.api.world.inventory.ItemStack(item), useHand);
-
-                        if (result != null) {
-                            return ItemUseResult.to(item, result);
-                        } else {
-                            return super.use(world, user, hand);
-                        }
-                    }
-
-                });
-
+        toRegister.add(this);
     }
 
     public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand) {
@@ -83,7 +73,9 @@ public class WaveItem {
             LangManager.addTranslation(mod.name, language, "item." + mod.name + "." + id, name);
         }
     }
-    public int getMaxStackSize() {return 64;}
+    public void setMaxStackSize(int size) {
+        settings.maxCount(size);
+    }
 
 
 }

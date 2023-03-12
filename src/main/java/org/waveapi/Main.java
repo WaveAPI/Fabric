@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.waveapi.api.WaveLoader;
+import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.misc.Side;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
@@ -33,6 +34,8 @@ public class Main implements ModInitializer {
 			bake = mod.getValue().changed;
 			mod.getValue().mod.init();
 		}
+
+		WaveItem.register();
 
 		if (Side.isClient()) {
 			LangManager.write();
