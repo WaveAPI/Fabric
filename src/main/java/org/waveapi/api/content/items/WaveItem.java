@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
 import org.waveapi.api.misc.Side;
+import org.waveapi.api.world.entity.living.EntityPlayer;
 import org.waveapi.api.world.inventory.ItemUseResult;
 import org.waveapi.content.items.CustomItemWrap;
 import org.waveapi.content.resources.LangManager;
@@ -46,7 +47,7 @@ public class WaveItem {
         toRegister.add(this);
     }
 
-    public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand) {
+    public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand, EntityPlayer player) {
         return null;
     }
 

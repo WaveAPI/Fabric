@@ -7,6 +7,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.waveapi.api.content.items.WaveItem;
+import org.waveapi.api.world.entity.living.EntityPlayer;
 import org.waveapi.api.world.inventory.ItemUseResult;
 import org.waveapi.api.world.inventory.UseHand;
 
@@ -30,7 +31,7 @@ public class CustomItemWrap extends Item {
             useHand = UseHand.OFF_HAND;
         }
 
-        ItemUseResult result = this.item.onUse(new org.waveapi.api.world.inventory.ItemStack(item), useHand);
+        ItemUseResult result = this.item.onUse(new org.waveapi.api.world.inventory.ItemStack(item), useHand, new EntityPlayer(user));
 
         if (result != null) {
             return ItemUseResult.to(item, result);
