@@ -1,13 +1,23 @@
 package org.waveapi.api.world.entity;
 
-public abstract class DamageSource {
+public class DamageSource {
 
-    public abstract String getName();
+    public net.minecraft.entity.damage.DamageSource source;
 
-    public abstract boolean doesIgnoreArmour();
+    public DamageSource(net.minecraft.entity.damage.DamageSource source) {
+        this.source = source;
+    }
 
-    public static final DamageSource GENERIC = null;
-    public static final DamageSource LAVA = null;
-    public static final DamageSource IN_FIRE = null;
+    public String getName() {
+        return source.getName();
+    }
+
+    public boolean doesIgnoreArmour() {
+        return source.bypassesArmor();
+    }
+
+    public static final DamageSource GENERIC = new DamageSource(net.minecraft.entity.damage.DamageSource.GENERIC);
+    public static final DamageSource LAVA = new DamageSource(net.minecraft.entity.damage.DamageSource.LAVA);
+    public static final DamageSource IN_FIRE = new DamageSource(net.minecraft.entity.damage.DamageSource.IN_FIRE);
 
 }
