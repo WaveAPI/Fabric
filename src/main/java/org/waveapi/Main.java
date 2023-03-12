@@ -4,7 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.waveapi.api.WaveLoader;
-import org.waveapi.api.mics.Side;
+import org.waveapi.api.misc.Side;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
 

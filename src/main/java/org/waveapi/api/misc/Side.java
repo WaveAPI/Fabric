@@ -1,4 +1,4 @@
-package org.waveapi.api.mics;
+package org.waveapi.api.misc;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
