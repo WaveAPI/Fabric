@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class WaveLoader {
@@ -31,7 +32,7 @@ public class WaveLoader {
     private static boolean nextChanged = false;
     public static void init() {
 
-        File modFolder = new File("./waves");
+        File modFolder = new File("./mods");
         File[] mods = modFolder.listFiles();
 
         File modified = new File(Main.mainFolder, "modifCache.txt");
@@ -59,18 +60,14 @@ public class WaveLoader {
                     continue;
                 }
                 ZipFile file = new ZipFile(mod);
-
-                if (file.getEntry("wave.yml") == null) {
+                ZipEntry waveYml = file.getEntry("wave.yml");
+                if (waveYml == null) {
                     continue;
                 }
 
                 URL[] urls = new URL[] {mod.toURI().toURL()};
                 URLClassLoader classLoader = new URLClassLoader(urls, WaveLoader.class.getClassLoader());
 
-                URL yml = classLoader.getResource("wave.yml");
-                if (yml == null) {
-                    continue;
-                }
 
                 if (mod.lastModified() > lastModified.getOrDefault(mod.getName(), 0L)) {
                     lastModified.put(mod.getName(), mod.lastModified());
@@ -81,7 +78,7 @@ public class WaveLoader {
                 }
 
                 Yaml yaml = new Yaml();
-                Map<String, Object> params = yaml.load(yml.openStream());
+                Map<String, Object> params = yaml.load(file.getInputStream(waveYml));
 
                 Object mainObject = params.get("main");
                 if (mainObject instanceof String) {
