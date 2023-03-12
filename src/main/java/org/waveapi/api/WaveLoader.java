@@ -60,7 +60,7 @@ public class WaveLoader {
                 }
                 ZipFile file = new ZipFile(mod);
 
-                if (file.getEntry("/wave.yml") != null) {
+                if (file.getEntry("wave.yml") == null) {
                     continue;
                 }
 

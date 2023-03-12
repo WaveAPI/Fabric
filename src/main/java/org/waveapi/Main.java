@@ -28,9 +28,7 @@ public class Main implements ModInitializer {
 
 		WaveLoader.init();
 
-		if (Side.isClient()) {
-			new ResourcePackManager();
-		}
+		new ResourcePackManager();
 
 		Set<String> loaded = new HashSet<>();
 
