@@ -11,4 +11,8 @@ public class EntityLiving extends EntityBase {
         super(livingEntity);
         this.livingEntity = livingEntity;
     }
+
+    public float getHeadYaw() {
+        return livingEntity.headYaw;
+    }
 }

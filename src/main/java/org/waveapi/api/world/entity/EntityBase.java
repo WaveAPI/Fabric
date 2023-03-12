@@ -13,4 +13,12 @@ public class EntityBase {
     public void setVelocity(Vector3 velocity) {
         entity.setVelocity(velocity.v);
     }
+
+    public float getYaw() {
+        return entity.getYaw();
+    }
+    public float getPitch() {
+        return entity.getPitch();
+    }
+
 }
