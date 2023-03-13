@@ -38,12 +38,11 @@ public class EntityBase {
         };
     }
 
+    public Vector3 getVelocity() {
+        return new Vector3(entity.getVelocity());
+    }
     public void setVelocity(Vector3 velocity) {
         entity.setVelocity(velocity.v);
-    }
-
-    public boolean isAlive() {
-        return entity.isAlive();
     }
 
     public float getYaw() {
@@ -53,4 +52,19 @@ public class EntityBase {
         return entity.getPitch();
     }
 
+    public Vector3 getPosition() {
+        return new Vector3(entity.getPos());
+    }
+
+    public void setPosition(Vector3 position) {
+        entity.setPosition(position.v);
+    }
+
+    public int getID() {
+        return entity.getId();
+    }
+
+    public String getName() {
+        return entity.getName().asString();
+    }
 }
