@@ -1,6 +1,9 @@
 package org.waveapi.api.world.entity;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import org.waveapi.api.math.BlockPos;
 import org.waveapi.api.math.Vector3;
 
 public class EntityBase {
@@ -38,5 +41,16 @@ public class EntityBase {
 
     public String getName() {
         return entity.getName().asString();
+    }
+
+    public BlockPos getBlockLookingAt(double maxDistance, boolean includeFluids) {
+        HitResult hit = entity.raycast(maxDistance, 1.0f, includeFluids);
+        if (hit.getType() == HitResult.Type.BLOCK)
+            return new BlockPos(((BlockHitResult) hit).getBlockPos());
+        return null;
+    }
+
+    public BlockPos getBlockLookingAt(double maxDistance) {
+        return getBlockLookingAt(maxDistance, false);
     }
 }
