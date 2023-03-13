@@ -32,4 +32,8 @@ public class EntityLiving extends EntityBase {
     public void damage(DamageSource source, float amount) {
         livingEntity.damage(source.source, amount);
     }
+
+    public boolean isAlive() {
+        return entity.isAlive();
+    }
 }
