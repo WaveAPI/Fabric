@@ -14,6 +14,10 @@ public class EntityBase {
         entity.setVelocity(velocity.v);
     }
 
+    public boolean isAlive() {
+        return entity.isAlive();
+    }
+
     public float getYaw() {
         return entity.getYaw();
     }
