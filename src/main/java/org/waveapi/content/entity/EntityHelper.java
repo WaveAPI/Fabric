@@ -7,7 +7,7 @@ import org.waveapi.api.world.entity.EntityBase;
 import org.waveapi.api.world.entity.living.EntityLiving;
 import org.waveapi.api.world.entity.living.EntityPlayer;
 
-public class EntityFactory {
+public class EntityHelper {
 
     public static EntityBase wrap(Entity entity) {
         if (entity instanceof LivingEntity) {

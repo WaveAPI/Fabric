@@ -1,2 +1,7 @@
-package org.waveapi.api.content.entities.renderer;public class WaveEntityRenderer {
+package org.waveapi.api.content.entities.renderer;
+
+public class WaveEntityRenderer {
+
+
+
 }
