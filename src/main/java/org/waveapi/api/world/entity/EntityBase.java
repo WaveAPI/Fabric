@@ -5,6 +5,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.world.World;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import org.waveapi.api.math.BlockPos;
 import org.waveapi.api.math.Vector3;
 
 public class EntityBase {
@@ -70,5 +73,16 @@ public class EntityBase {
 
     public boolean isAlive() {
         return entity.isAlive();
+    }
+
+    public BlockPos getBlockLookingAt(double maxDistance, boolean includeFluids) {
+        HitResult hit = entity.raycast(maxDistance, 1.0f, includeFluids);
+        if (hit.getType() == HitResult.Type.BLOCK)
+            return new BlockPos(((BlockHitResult) hit).getBlockPos());
+        return null;
+    }
+
+    public BlockPos getBlockLookingAt(double maxDistance) {
+        return getBlockLookingAt(maxDistance, false);
     }
 }
