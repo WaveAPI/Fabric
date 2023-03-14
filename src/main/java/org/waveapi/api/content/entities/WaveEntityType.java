@@ -23,8 +23,8 @@ public class WaveEntityType<T extends Entity> {
     private final Class<EntityBase> entity;
     private final String id;
     public EntityType<Entity> entityType;
-
     public EntityGroup type;
+    public EntityBox box;
 
 
     private static LinkedList<WaveEntityType<?>> toRegister = new LinkedList<>();
@@ -41,8 +41,9 @@ public class WaveEntityType<T extends Entity> {
                                  IllegalAccessException e) {
                             throw new RuntimeException(e);
                         }
-                    }).dimensions(EntityDimensions.fixed(0.75f, 0.75f)).build()
+                    }).dimensions(t.box.getDimensions()).build()
             );
+
 
 
         }
@@ -51,7 +52,7 @@ public class WaveEntityType<T extends Entity> {
 
 
 
-    public WaveEntityType (String id, Class<EntityBase> entity, Class<WaveEntityRenderer> renderer, EntityGroup group, WaveMod mod) {
+    public WaveEntityType (String id, Class<EntityBase> entity, Class<WaveEntityRenderer> renderer, EntityGroup group, EntityBox box, WaveMod mod) {
         this.id = id;
         this.entity = entity;
         this.renderer = renderer;
@@ -62,8 +63,12 @@ public class WaveEntityType<T extends Entity> {
         toRegister.add(this);
     }
 
-    public WaveEntityType (String id, Class<EntityBase> entity, Class<WaveEntityRenderer> renderer, WaveMod mod) {
-        this(id, entity, renderer, EntityGroup.CREATURE, mod);
+    public WaveEntityType (String id, Class<EntityBase> entity, Class<WaveEntityRenderer> renderer, EntityBox box, WaveMod mod) {
+        this(id, entity, renderer, EntityGroup.CREATURE, box, mod);
+    }
+
+    public WaveEntityType (String id, Class<EntityBase> entity, Class<WaveEntityRenderer> renderer,  WaveMod mod) {
+        this(id, entity, renderer, new EntityBox.fixed(0.5f, 0.5f), mod);
     }
 
 

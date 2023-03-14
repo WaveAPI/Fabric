@@ -67,4 +67,8 @@ public class EntityBase {
     public String getName() {
         return entity.getName().asString();
     }
+
+    public boolean isAlive() {
+        return entity.isAlive();
+    }
 }
