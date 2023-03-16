@@ -70,4 +70,15 @@ public class EntityBase {
     public BlockPos getBlockLookingAt(double maxDistance) {
         return getBlockLookingAt(maxDistance, false);
     }
+
+    public void destroy() {
+        entity.remove(Entity.RemovalReason.DISCARDED);
+    }
+
+    public boolean handleAttack() {
+        return false;
+    }
+    public boolean onDamage(DamageSource source, float amount) {
+        return entity.damage(source.source, amount);
+    }
 }

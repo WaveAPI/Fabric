@@ -2,6 +2,7 @@ package org.waveapi.content.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
@@ -35,5 +36,15 @@ public class EntityWrap extends Entity {
     @Override
     public Packet<?> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this);
+    }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        return entity.onDamage(new org.waveapi.api.world.entity.DamageSource(source), amount);
+    }
+
+    @Override
+    public boolean handleAttack(Entity attacker) {
+        return entity.handleAttack();
     }
 }

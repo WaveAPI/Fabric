@@ -9,6 +9,7 @@ import net.minecraft.util.registry.Registry;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.entities.renderer.WaveEntityRenderer;
+import org.waveapi.api.misc.Side;
 import org.waveapi.api.world.entity.EntityBase;
 import org.waveapi.api.world.entity.EntityGroup;
 import org.waveapi.content.entity.EntityHelper;
@@ -21,11 +22,11 @@ import java.util.List;
 public class WaveEntityType<T extends EntityBase> {
 
     private final WaveMod mod;
-    private final WaveEntityRenderer renderer;
     public final Class<T> entity;
     public final Class<Entity> entityClass;
 
     private final String id;
+    private final FabricEntityTypeBuilder<Entity> preregister;
     public EntityType<Entity> entityType;
     public EntityGroup type;
     public EntityBox box;
@@ -38,30 +39,34 @@ public class WaveEntityType<T extends EntityBase> {
             t.entityType = Registry.register(
                     Registry.ENTITY_TYPE,
                     new Identifier(t.mod.name, t.id),
-                    FabricEntityTypeBuilder.create(t.type.to()).entityFactory((type, world) -> EntityCreation.create(t, world).entity).dimensions(t.box.getDimensions()).build()
+                    t.preregister.build()
             );
 
-            t.renderer.register(t);
-            EntityRendererRegistry.register(t.entityType, t.renderer::getRenderer);
-
-
-
-
+            if (Side.isClient()) {
+                t.getEntityRenderer().register(t);
+                EntityRendererRegistry.register(t.entityType, t.getEntityRenderer()::getRenderer);
+            }
 
         }
         toRegister = null;
     }
 
+    public WaveEntityRenderer getEntityRenderer() {
+        return new WaveEntityRenderer();
+    }
 
 
     @SuppressWarnings("unchecked")
-    public WaveEntityType (String id, Class<T> entity, WaveEntityRenderer renderer, EntityGroup group, EntityBox box, WaveMod mod) {
+    public WaveEntityType (String id, Class<T> entity, EntityGroup group, EntityBox box, WaveMod mod) {
         this.id = id;
         this.entity = entity;
-        this.renderer = renderer;
         this.mod = mod;
         this.type = group;
         this.box = box;
+
+        this.preregister = FabricEntityTypeBuilder.create(type.to()).entityFactory((type, world) -> EntityCreation.create(this, world).entity).dimensions(box.getDimensions());
+
+        setMaxTrackingRange(8);
 
         entityClass = (Class<Entity>) ClassHelper.LoadOrGenerateCompoundClass(entity.getTypeName() + "BaseEntityClass", new ClassHelper.Generator<Entity>() {
             @Override
@@ -83,12 +88,16 @@ public class WaveEntityType<T extends EntityBase> {
         toRegister.add(this);
     }
 
-    public WaveEntityType (String id, Class<T> entity, WaveEntityRenderer renderer, EntityBox box, WaveMod mod) {
-        this(id, entity, renderer, EntityGroup.CREATURE, box, mod);
+    public void setMaxTrackingRange(int range) {
+        this.preregister.trackRangeBlocks(range);
     }
 
-    public WaveEntityType (String id, Class<T> entity, WaveEntityRenderer renderer,  WaveMod mod) {
-        this(id, entity, renderer, new EntityBox.fixed(0.5f, 0.5f), mod);
+    public WaveEntityType (String id, Class<T> entity, EntityBox box, WaveMod mod) {
+        this(id, entity, EntityGroup.CREATURE, box, mod);
+    }
+
+    public WaveEntityType (String id, Class<T> entity,  WaveMod mod) {
+        this(id, entity, new EntityBox.fixed(0.5f, 0.5f), mod);
     }
 
     public String getId() {
