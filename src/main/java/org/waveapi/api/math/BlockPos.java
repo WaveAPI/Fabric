@@ -38,4 +38,6 @@ public class BlockPos {
     public void setZ(int z) {
         pos.setZ(z);
     }
+
+    public Vector3 toVector3() {return new Vector3(getX(), getY(), getZ());}
 }

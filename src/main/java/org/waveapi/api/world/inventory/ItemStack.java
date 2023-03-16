@@ -2,7 +2,7 @@ package org.waveapi.api.world.inventory;
 
 public class ItemStack {
 
-    private final net.minecraft.item.ItemStack itemStack;
+    public final net.minecraft.item.ItemStack itemStack;
     public ItemStack (net.minecraft.item.ItemStack itemStack) {
         this.itemStack = itemStack;
     }

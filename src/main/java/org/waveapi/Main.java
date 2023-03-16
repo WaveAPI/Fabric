@@ -9,6 +9,7 @@ import org.waveapi.api.content.entities.WaveEntityType;
 import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.content.items.WaveShapedRecipe;
 import org.waveapi.api.misc.Side;
+import org.waveapi.content.entity.EntityHelper;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
 import org.waveapi.utils.FileUtil;
@@ -29,6 +30,7 @@ public class Main implements ModInitializer {
 	public void onInitialize() {
 
 		LOGGER.info("Initializing");
+		long initialTime = System.currentTimeMillis();
 
 		WaveLoader.init();
 
@@ -75,6 +77,10 @@ public class Main implements ModInitializer {
 		if (Side.isClient()) {
 			LangManager.write();
 		}
+
+		EntityHelper.entityPossibleInterfaces = null;
+
+		LOGGER.info("Initializing took " + (System.currentTimeMillis() - initialTime) + "ms");
 
 	}
 }

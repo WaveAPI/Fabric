@@ -7,8 +7,10 @@ import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
 import org.waveapi.api.misc.Side;
 import org.waveapi.api.world.entity.living.EntityPlayer;
+import org.waveapi.api.world.inventory.ItemStack;
 import org.waveapi.api.world.inventory.ItemUseResult;
 import org.waveapi.api.world.inventory.UseHand;
+import org.waveapi.api.world.world.World;
 import org.waveapi.content.items.CustomItemWrap;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
@@ -41,7 +43,7 @@ public class WaveItem {
         toRegister.add(this);
     }
 
-    public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand, EntityPlayer player) {
+    public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand, EntityPlayer player, World world) {
         return null;
     }
 
@@ -80,5 +82,8 @@ public class WaveItem {
         return this;
     }
 
+    public ItemStack getDefaultStack() {
+        return new ItemStack(item.getDefaultStack());
+    }
 
 }

@@ -31,7 +31,7 @@ public class CustomItemWrap extends Item {
             useHand = UseHand.OFF_HAND;
         }
 
-        ItemUseResult result = this.item.onUse(new org.waveapi.api.world.inventory.ItemStack(item), useHand, new EntityPlayer(user));
+        ItemUseResult result = this.item.onUse(new org.waveapi.api.world.inventory.ItemStack(item), useHand, new EntityPlayer(user), new org.waveapi.api.world.world.World(world));
 
         if (result != null) {
             return ItemUseResult.to(item, result);

@@ -1,14 +1,15 @@
 package org.waveapi.api.world.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.world.World;
 import org.waveapi.api.content.entities.EntityCreation;
 import org.waveapi.api.math.BlockPos;
 import org.waveapi.api.math.Vector3;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class EntityBase {
     public Entity entity;
@@ -18,32 +19,11 @@ public class EntityBase {
     }
 
     public EntityBase(EntityCreation e) {
-        entity = new Entity(e.type, e.world) {
-            @Override
-            protected void initDataTracker() {
-
-            }
-
-            @Override
-            protected void readCustomDataFromNbt(NbtCompound nbt) {
-
-            }
-
-            @Override
-            protected void writeCustomDataToNbt(NbtCompound nbt) {
-
-            }
-
-            @Override
-            public Packet<?> createSpawnPacket() {
-                return new EntitySpawnS2CPacket(this);
-            }
-
-            @Override
-            public void tick() {
-                super.baseTick();
-            }
-        };
+        try {
+            entity = (Entity)e.eClass.getConstructor(EntityType.class, World.class, EntityBase.class).newInstance(e.type, e.world, this);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public Vector3 getVelocity() {
