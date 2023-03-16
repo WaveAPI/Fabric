@@ -1,12 +1,12 @@
 package org.waveapi.api.world.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
-import net.minecraft.world.World;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import org.waveapi.api.content.entities.EntityCreation;
 import org.waveapi.api.math.BlockPos;
 import org.waveapi.api.math.Vector3;
 
@@ -17,8 +17,8 @@ public class EntityBase {
         this.entity = entity;
     }
 
-    public EntityBase(EntityType<?> type, World world) {
-        entity = new Entity(type, world) {
+    public EntityBase(EntityCreation e) {
+        entity = new Entity(e.type, e.world) {
             @Override
             protected void initDataTracker() {
 
@@ -36,7 +36,12 @@ public class EntityBase {
 
             @Override
             public Packet<?> createSpawnPacket() {
-                return null;
+                return new EntitySpawnS2CPacket(this);
+            }
+
+            @Override
+            public void tick() {
+                super.baseTick();
             }
         };
     }

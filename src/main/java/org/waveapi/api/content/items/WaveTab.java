@@ -4,15 +4,11 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
 import org.waveapi.api.content.items.models.SimpleItemModel;
 import org.waveapi.api.misc.Side;
-import org.waveapi.content.items.CustomItemWrap;
 import org.waveapi.content.resources.LangManager;
-
-import java.util.LinkedList;
 
 import static org.waveapi.Main.bake;
 
