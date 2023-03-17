@@ -38,6 +38,7 @@ public class ClassHelper {
         if (generate) {
             ClassPool pool = ClassPool.getDefault();
             CtClass ctClass = pool.makeClass(name);
+            ctClass.defrost();
             try {
                 ctClass.setSuperclass(pool.getCtClass(generator.getBaseClass().getName()));
                 CtClass methods = pool.getCtClass(generator.getBaseMethods().getName());
@@ -62,6 +63,7 @@ public class ClassHelper {
                 }
 
                 ctClass.writeFile("./waveAPI/classes");
+                ctClass.freeze();
             } catch (CannotCompileException | NotFoundException | IOException e) {
                 throw new RuntimeException(e);
             }
