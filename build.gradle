@@ -61,7 +61,7 @@ jar {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
 	from {
-		configurations.inlcudeInJar.collect { it.isDirectory() ? it : zipTree(it) }
+		configurations.inlcudeInJar.collect { it.name.contains("META-INF") ? null : it.isDirectory() ? it : zipTree(it) }
 	}
 }
 

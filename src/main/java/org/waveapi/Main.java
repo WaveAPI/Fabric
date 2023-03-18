@@ -32,11 +32,11 @@ public class Main implements ModInitializer {
 		LOGGER.info("Initializing");
 		long initialTime = System.currentTimeMillis();
 
-		WaveLoader.init();
-
 		new ResourcePackManager();
 
 		Set<String> loaded = new HashSet<>();
+
+		MixinConfigPlugin.allowedMixins = null;
 
 		for (Map.Entry<String, WaveLoader.WrappedWaveMod> mod : WaveLoader.getMods().entrySet()) {
 			bake = mod.getValue().changed;
