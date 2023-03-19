@@ -25,12 +25,13 @@ public class WaveItem {
 
     private Item item;
 
-    private final Item.Settings settings;
+    private Item.Settings settings;
 
     private static LinkedList<WaveItem> toRegister = new LinkedList<>();
     public static void register() {
         for (WaveItem item : toRegister) {
             item.item = Registry.register(Registry.ITEM, new Identifier(item.mod.name, item.id), new CustomItemWrap(item.settings, item));
+            item.settings = null;
         }
         toRegister = null;
     }
@@ -41,6 +42,12 @@ public class WaveItem {
         this.settings = new Item.Settings();
 
         toRegister.add(this);
+    }
+
+    public WaveItem(Item item) {
+        Identifier identifier = Registry.ITEM.getId(item);
+        this.id = identifier.getPath();
+        this.mod = null; // todo: change to actual mod
     }
 
     public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand, EntityPlayer player, World world) {

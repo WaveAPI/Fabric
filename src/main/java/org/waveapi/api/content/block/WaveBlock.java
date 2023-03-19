@@ -15,16 +15,24 @@ public class WaveBlock {
     private final String id;
     private final WaveMod mod;
     private Block block;
-    private final AbstractBlock.Settings settings;
+    private AbstractBlock.Settings settings;
 
     private static LinkedList<WaveBlock> toRegister = new LinkedList<>();
 
     public WaveBlock(String id, WaveMod mod) {
         this.id = id;
         this.mod = mod;
-        this.settings = FabricBlockSettings.of(Material.METAL); // TODO materials
+        this.settings = FabricBlockSettings.of(Material.METAL);
 
         toRegister.add(this);
+    }
+
+    public WaveBlock(Block block) {
+        this.block = block;
+        Identifier identifier = Registry.BLOCK.getId(block);
+        toRegister.add(this);
+        mod = null;  // todo: change to actual mod
+        id = identifier.getPath();
     }
 
     public static void register() {
