@@ -7,6 +7,7 @@ import org.waveapi.api.WaveLoader;
 import org.waveapi.api.events.Events;
 import org.waveapi.api.misc.Side;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,8 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
             Main.LOGGER.info("Preloading");
             allowedMixins = new HashSet<>();
             allowedMixins.add("org.waveapi.mixin.MixinResourcePackManager");
+
+            new File("./waveAPI/classes").mkdirs();
 
             try {
                 WaveLoader.init();
