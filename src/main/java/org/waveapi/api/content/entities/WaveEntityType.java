@@ -68,7 +68,7 @@ public class WaveEntityType<T extends EntityBase> {
 
         setMaxTrackingRange(8);
 
-        entityClass = (Class<Entity>) ClassHelper.LoadOrGenerateCompoundClass(entity.getTypeName() + "BaseEntityClass", new ClassHelper.Generator<Entity>() {
+        entityClass = (Class<Entity>) ClassHelper.LoadOrGenerateCompoundClass(entity.getTypeName() + "$mcEntity", new ClassHelper.Generator<Entity>() {
             @Override
             public Class<Entity> getBaseClass() {
                 return Entity.class;

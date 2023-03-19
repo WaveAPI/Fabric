@@ -1,7 +1,7 @@
 package org.waveapi.content.items;
 
 import net.minecraft.block.Block;
-import org.waveapi.api.content.block.WaveBlock;
+import org.waveapi.api.content.items.block.WaveBlock;
 
 public class CustomBlockWrap extends Block {
     private final WaveBlock block;

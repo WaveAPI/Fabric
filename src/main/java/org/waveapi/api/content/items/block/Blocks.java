@@ -1,4 +1,4 @@
-package org.waveapi.api.content.block;
+package org.waveapi.api.content.items.block;
 
 public class Blocks { // TODO: populate
     public final static WaveBlock AIR = new WaveBlock(net.minecraft.block.Blocks.AIR);

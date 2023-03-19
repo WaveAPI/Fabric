@@ -4,10 +4,10 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.waveapi.api.WaveLoader;
-import org.waveapi.api.content.block.WaveBlock;
 import org.waveapi.api.content.entities.WaveEntityType;
 import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.content.items.WaveShapedRecipe;
+import org.waveapi.api.content.items.block.WaveBlock;
 import org.waveapi.api.misc.Side;
 import org.waveapi.content.entity.EntityHelper;
 import org.waveapi.content.resources.LangManager;
@@ -85,6 +85,5 @@ public class Main implements ModInitializer {
 		EntityHelper.entityPossibleInterfaces = null;
 
 		LOGGER.info("Initializing took " + (System.currentTimeMillis() - initialTime) + "ms");
-
 	}
 }
