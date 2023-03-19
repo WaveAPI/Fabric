@@ -24,16 +24,26 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
             allowedMixins = new HashSet<>();
             allowedMixins.add("org.waveapi.mixin.MixinResourcePackManager");
 
-            WaveLoader.init();
+            try {
+                WaveLoader.init();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(-1);
+            }
 
             Main.LOGGER.info("Registering events.");
 
             Events events = new Events();
 
             for (Map.Entry<String, WaveLoader.WrappedWaveMod> mod : WaveLoader.getMods().entrySet()) {
-                mod.getValue().mod.registerEvents(events);
-                if (Side.isClient()) {
-                    mod.getValue().mod.registerClientEvents(events);
+                try {
+                    mod.getValue().mod.registerEvents(events);
+                    if (Side.isClient()) {
+                        mod.getValue().mod.registerClientEvents(events);
+                    }
+                } catch (Exception e) {
+                    new RuntimeException("Failed while registering events of mod of waveAPI mod [" + mod.getValue().mod.name + "]", e).printStackTrace();
+                    System.exit(-1);
                 }
             }
 

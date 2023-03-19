@@ -45,7 +45,11 @@ public class Main implements ModInitializer {
 				FileUtil.recursivelyDelete(new File(ResourcePackManager.getInstance().getPackDir(), "assets/" + mod.getValue().mod.name));
 			}
 			loaded.add(mod.getValue().mod.name);
-			mod.getValue().mod.init();
+			try {
+				mod.getValue().mod.init();
+			} catch (Exception e) {
+				throw new RuntimeException("Failed because of waveAPI mod [" + mod.getValue().mod.name + "]", e);
+			}
 		}
 
 		File[] files = new File(ResourcePackManager.getInstance().getPackDir(), "data").listFiles();

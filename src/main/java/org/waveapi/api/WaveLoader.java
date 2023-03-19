@@ -93,7 +93,7 @@ public class WaveLoader {
                 }
 
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Failed in pre-init of waveAPI mod [" + mod.getName() + "]", e);
             }
         }
         try {
