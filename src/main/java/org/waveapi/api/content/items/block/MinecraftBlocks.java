@@ -1,6 +1,6 @@
 package org.waveapi.api.content.items.block;
 
-public class Blocks {
+public class MinecraftBlocks {
     public static final WaveBlock AIR = new WaveBlock(net.minecraft.block.Blocks.AIR);
     public static final WaveBlock STONE = new WaveBlock(net.minecraft.block.Blocks.STONE);
     public static final WaveBlock GRANITE = new WaveBlock(net.minecraft.block.Blocks.GRANITE);
