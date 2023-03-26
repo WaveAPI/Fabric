@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import org.waveapi.api.WaveLoader;
 import org.waveapi.api.events.Events;
 import org.waveapi.api.misc.Side;
+import org.waveapi.ticker.DeltaTickManager;
 
 import java.io.File;
 import java.util.HashSet;
@@ -22,7 +23,11 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
         if (mixinPackage.equals("org.waveapi.mixin")) {
             long initialTime = System.currentTimeMillis();
             Main.LOGGER.info("Preloading");
+
             allowedMixins = new HashSet<>();
+
+            DeltaTickManager.initialize();
+
             allowedMixins.add("org.waveapi.mixin.MixinResourcePackManager");
 
             new File("./waveAPI/classes").mkdirs();

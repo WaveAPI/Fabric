@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "org.waveapi.MixinConfigPlugin",
   "mixins": [
-    "MixinResourcePackManager"
+    "MixinResourcePackManager",
+    "MixinWorldTileTick"
   ],
   "injectors": {
     "defaultRequire": 1

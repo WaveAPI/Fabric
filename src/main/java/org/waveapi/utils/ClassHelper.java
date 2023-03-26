@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.Arrays;
 import java.util.List;
 
 public class ClassHelper {
@@ -21,44 +22,50 @@ public class ClassHelper {
         }
     }
 
-    public interface InterfaceImpl {
-        String getMethods();
-        String getInterface();
-    }
-
-    public interface Generator<M> {
-        Class<M> getBaseClass();
-
+    public interface Generator {
         Class<?> getBaseMethods();
-
-        List<InterfaceImpl> getInterfaces();
+        List<String> getInterfaces();
     }
 
-    public static <T> Class<?> LoadOrGenerateCompoundClass(String name, Generator<T> generator, boolean generate) {
+    public static <T> Class<?> LoadOrGenerateCompoundClass(String name, Generator generator, boolean generate) {
         if (generate) {
             ClassPool pool = ClassPool.getDefault();
             CtClass ctClass = pool.makeClass(name);
             ctClass.defrost();
             try {
-                ctClass.setSuperclass(pool.getCtClass(generator.getBaseClass().getName()));
-                CtClass methods = pool.getCtClass(generator.getBaseMethods().getName());
+                CtClass baseClass = pool.getCtClass(generator.getBaseMethods().getName());
+                ctClass.setSuperclass(baseClass.getSuperclass());
 
-                for (CtField field : methods.getDeclaredFields()) {
+                for (CtField field : baseClass.getDeclaredFields()) {
                     ctClass.addField(new CtField(field, ctClass));
                 }
 
-                for (CtConstructor constructor : methods.getDeclaredConstructors()) {
+                for (CtClass interface_ : baseClass.getInterfaces()) {
+                    ctClass.addInterface(interface_);
+                }
+
+                for (CtConstructor constructor : baseClass.getDeclaredConstructors()) {
                     ctClass.addConstructor(new CtConstructor(constructor, ctClass, null));
                 }
 
-                for (CtMethod method : methods.getDeclaredMethods()) {
+                for (CtMethod method : baseClass.getDeclaredMethods()) {
                     ctClass.addMethod(new CtMethod(method, ctClass, null));
                 }
 
-                for (InterfaceImpl impl : generator.getInterfaces()) {
-                    ctClass.addInterface(pool.getCtClass(impl.getInterface()));
-                    for (CtMethod method : pool.getCtClass(impl.getMethods()).getDeclaredMethods()) {
+                for (String impl : generator.getInterfaces()) {
+                    CtClass cls = pool.getCtClass(impl);
+                    for (CtClass interfce : cls.getInterfaces()) {
+                        ctClass.addInterface(interfce);
+                    }
+                    for (CtMethod method : cls.getDeclaredMethods()) {
                         ctClass.addMethod(new CtMethod(method, ctClass, null));
+                    }
+
+                    for (CtField field : cls.getDeclaredFields()) {
+                        boolean notContainsField = Arrays.stream(ctClass.getDeclaredFields()).noneMatch((x) -> x.getName().equals(field.getName()));
+                        if (notContainsField) {
+                            ctClass.addField(new CtField(field, ctClass));
+                        }
                     }
                 }
 
