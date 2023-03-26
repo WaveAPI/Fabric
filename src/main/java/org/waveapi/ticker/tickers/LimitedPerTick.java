@@ -27,7 +27,6 @@ public class LimitedPerTick implements DeltaTicker {
 
     @Override
     public void addTicking(DeltaTicking ticking) {
-        System.out.println("test");
         this.ticking.add(new tickWrap(ticking, currentTick));
     }
 
