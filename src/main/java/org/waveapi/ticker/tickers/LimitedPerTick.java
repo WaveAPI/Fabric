@@ -35,10 +35,11 @@ public class LimitedPerTick implements DeltaTicker {
         currentTick++;
         for (int x = 0 ; x < perTick ; x++) {
             if (i >= ticking.size()) {
+                i = 0;
                 return;
             }
             tickWrap deltaTicking = this.ticking.get(i);
-            if (deltaTicking.ticking instanceof BlockEntity && !((BlockEntity) deltaTicking.ticking).isRemoved()) {
+            if (deltaTicking.ticking instanceof BlockEntity && ((BlockEntity) deltaTicking.ticking).isRemoved()) {
                 ticking.remove(i);
             }
             deltaTicking.ticking.tick((int) (currentTick - deltaTicking.lastTick));

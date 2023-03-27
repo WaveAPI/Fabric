@@ -1,5 +1,6 @@
 package org.waveapi.api.world.world;
 
+import org.waveapi.api.math.BlockPos;
 import org.waveapi.api.world.entity.EntityBase;
 
 public class World {
@@ -15,5 +16,9 @@ public class World {
 
     public void addEntity(EntityBase entity) {
         world.spawnEntity(entity.entity);
+    }
+
+    public boolean setBlockState(BlockPos pos, BlockState state) {
+        return world.setBlockState(pos.pos, state.state);
     }
 }

@@ -38,4 +38,8 @@ public class WaveTileEntity {
         return new World(blockEntity.getWorld());
     }
 
+    public org.waveapi.api.math.BlockPos getPosition() {
+        return new org.waveapi.api.math.BlockPos(blockEntity.getPos());
+    }
+
 }

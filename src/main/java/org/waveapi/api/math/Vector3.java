@@ -13,13 +13,13 @@ public class Vector3 {
     }
 
     public Vec3d v;
-    public Vector3 setX(double x) {
+    public Vector3 withX(double x) {
         return new Vector3(new Vec3d(x, v.y, v.z));
     }
-    public Vector3 setY(double y) {
+    public Vector3 withY(double y) {
         return new Vector3(new Vec3d(v.x, y, v.z));
     }
-    public Vector3 setZ(double z) {
+    public Vector3 withZ(double z) {
         return new Vector3(new Vec3d(v.x, v.y, z));
     }
 

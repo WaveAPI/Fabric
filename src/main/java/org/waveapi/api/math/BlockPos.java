@@ -29,15 +29,25 @@ public class BlockPos {
         return pos.getZ();
     }
 
-    public void setX(int x) {
-        pos.setX(x);
+    public BlockPos setX(int x) {
+        return this;
     }
-    public void setY(int y) {
-        pos.setY(y);
+    public BlockPos setY(int y) {
+        return this;
     }
-    public void setZ(int z) {
-        pos.setZ(z);
+    public BlockPos setZ(int z) {
+        return this;
     }
+
+    public BlockPos addX(int x) {return new BlockPos(pos.add(x, 0, 0));}
+    public BlockPos addY(int y) {return new BlockPos(pos.add(0, y, 0));}
+    public BlockPos addZ(int z){return new BlockPos(pos.add(0, 0, z));}
+
+    public BlockPos add(int x, int y, int z) {return new BlockPos(pos.add(x, y, z));}
+
+    public BlockPos add(BlockPos pos) {return new BlockPos(this.pos.add(pos.pos));}
+
+
 
     public Vector3 toVector3() {return new Vector3(getX(), getY(), getZ());}
 }

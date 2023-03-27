@@ -17,6 +17,7 @@ import org.waveapi.api.content.items.block.blockentities.TileEntityBlock;
 import org.waveapi.api.content.items.block.blockentities.TileEntityCreation;
 import org.waveapi.api.content.items.block.model.BlockModel;
 import org.waveapi.api.misc.Side;
+import org.waveapi.api.world.world.BlockState;
 import org.waveapi.content.items.BlockHelper;
 import org.waveapi.content.items.CustomBlockWrap;
 import org.waveapi.content.items.TileEntityWrapper;
@@ -60,7 +61,6 @@ public class WaveBlock {
     public WaveBlock(Block block) {
         this.block = block;
         Identifier identifier = Registry.BLOCK.getId(block);
-        toRegister.add(this);
         mod = null;  // todo: change to actual mod
         id = identifier.getPath();
     }
@@ -172,5 +172,9 @@ public class WaveBlock {
 
     public Block getBlock() {
         return block;
+    }
+
+    public BlockState getDefaultState() {
+        return new BlockState(block.getDefaultState());
     }
 }
