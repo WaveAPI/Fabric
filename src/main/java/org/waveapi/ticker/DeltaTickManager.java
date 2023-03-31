@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
 import java.util.Map;
 
 public class DeltaTickManager {
@@ -22,7 +24,7 @@ public class DeltaTickManager {
         if (!cfg.exists()) {
             try {
                 Files.write(cfg.toPath(), ("ticker: LimitedPerTick\n" +
-                                            "tickersPerTick: 100").getBytes());
+                                            "tickersPerTick: 100").getBytes(), StandardOpenOption.CREATE_NEW);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

@@ -30,6 +30,6 @@ public class EntityLiving extends EntityBase {
     }
 
     public void damage(DamageSource source, float amount) {
-        livingEntity.damage(source.source, amount);
+        livingEntity.damage(source.getSource(entity.world), amount);
     }
 }

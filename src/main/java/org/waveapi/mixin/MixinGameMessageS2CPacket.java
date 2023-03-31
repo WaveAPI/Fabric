@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 public class MixinGameMessageS2CPacket {
     @Inject(method = "onGameMessage", at=@At("HEAD"), cancellable = true)
     public void onMessage(GameMessageS2CPacket packet, CallbackInfo ci) {
-        Text text = new Text(packet.getMessage());
+        Text text = new Text(packet.content());
         ClientChatMessageEvent e = new ClientChatMessageEvent(text);
         for (Events.EventListener listener : ClientChatMessageEvent.listeners) {
             try {

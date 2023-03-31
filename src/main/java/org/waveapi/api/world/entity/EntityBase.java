@@ -53,7 +53,7 @@ public class EntityBase {
     }
 
     public String getName() {
-        return entity.getName().asString();
+        return entity.getName().getString();
     }
 
     public boolean isAlive() {
@@ -79,6 +79,6 @@ public class EntityBase {
         return false;
     }
     public boolean onDamage(DamageSource source, float amount) {
-        return entity.damage(source.source, amount);
+        return entity.damage(source.getSource(entity.world), amount);
     }
 }

@@ -1,7 +1,5 @@
 package org.waveapi.api.misc;
 
-import net.minecraft.text.TranslatableText;
-
 public class Text {
 
     public Text (net.minecraft.text.Text text) {
@@ -16,7 +14,7 @@ public class Text {
         return new Text(net.minecraft.text.Text.of(text));
     }
     public static Text translatable(String text) {
-        return new Text(new TranslatableText(text));
+        return new Text(net.minecraft.text.Text.translatable(text));
     }
 
 }

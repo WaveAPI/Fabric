@@ -1,8 +1,9 @@
 package org.waveapi.api.content.items;
 
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
 import org.waveapi.api.misc.Side;
@@ -28,9 +29,14 @@ public class WaveItem {
     private Item.Settings settings;
 
     private static LinkedList<WaveItem> toRegister = new LinkedList<>();
+    private WaveTab tab;
+
     public static void register() {
         for (WaveItem item : toRegister) {
-            item.item = Registry.register(Registry.ITEM, new Identifier(item.mod.name, item.id), new CustomItemWrap(item.settings, item));
+            item.item = Registry.register(Registries.ITEM, new Identifier(item.mod.name, item.id), new CustomItemWrap(item.settings, item));
+            if (item.tab != null) {
+                item.tab.items.add(item.item.getDefaultStack());
+            }
             item.settings = null;
         }
         toRegister = null;
@@ -45,7 +51,7 @@ public class WaveItem {
     }
 
     public WaveItem(Item item) {
-        Identifier identifier = Registry.ITEM.getId(item);
+        Identifier identifier = Registries.ITEM.getId(item);
         this.id = identifier.getPath();
         this.mod = null; // todo: change to actual mod
     }
@@ -66,7 +72,7 @@ public class WaveItem {
     }
 
     public WaveItem setTab(WaveTab tab) {
-        settings.group(tab.group);
+        this.tab = tab;
         return this;
     }
 

@@ -4,8 +4,9 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.entities.renderer.WaveEntityRenderer;
@@ -37,7 +38,7 @@ public class WaveEntityType<T extends EntityBase> {
     public static void register() {
         for (WaveEntityType<?> t : toRegister) {
             t.entityType = Registry.register(
-                    Registry.ENTITY_TYPE,
+                    Registries.ENTITY_TYPE,
                     new Identifier(t.mod.name, t.id),
                     t.preregister.build()
             );

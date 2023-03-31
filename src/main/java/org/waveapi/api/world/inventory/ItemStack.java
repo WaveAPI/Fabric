@@ -8,7 +8,7 @@ public class ItemStack {
     }
 
     public String getName() {
-        return this.itemStack.getName().asString();
+        return this.itemStack.getName().getString();
     }
     public int getAmount() {
         return this.itemStack.getCount();

@@ -8,8 +8,9 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.WaveTab;
@@ -43,6 +44,7 @@ public class WaveBlock {
 
     private Class<CustomBlockWrap> blockBase;
     private boolean hasItem = true;
+    private WaveTab tab;
 
     public WaveBlock(String id, WaveMod mod, BlockMaterial material) {
         this.id = id;
@@ -60,7 +62,7 @@ public class WaveBlock {
 
     public WaveBlock(Block block) {
         this.block = block;
-        Identifier identifier = Registry.BLOCK.getId(block);
+        Identifier identifier = Registries.BLOCK.getId(block);
         mod = null;  // todo: change to actual mod
         id = identifier.getPath();
     }
@@ -88,9 +90,12 @@ public class WaveBlock {
                 throw new RuntimeException(e);
             }
 
-            block.block = Registry.register(Registry.BLOCK, new Identifier(block.mod.name, block.id), bl);
+            block.block = Registry.register(Registries.BLOCK, new Identifier(block.mod.name, block.id), bl);
             if (block.hasItem()) {
-                Registry.register(Registry.ITEM, new Identifier(block.mod.name, block.id), new BlockItem(block.block, itemSet));
+                Item item = Registry.register(Registries.ITEM, new Identifier(block.mod.name, block.id), new BlockItem(block.block, itemSet));
+                if (block.tab != null) {
+                    block.tab.items.add(item.getDefaultStack());
+                }
             }
             if (block instanceof TileEntityBlock) {
                 try {
@@ -111,7 +116,7 @@ public class WaveBlock {
                             , Main.bake);
                     entityType.set(block.block, tile);
 
-                    BlockEntityType<BlockEntity> entity = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(block.mod.name, block.id + "_tile"),
+                    BlockEntityType<BlockEntity> entity = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(block.mod.name, block.id + "_tile"),
                             FabricBlockEntityTypeBuilder.create(
                                     (pos, state) -> {
                                         try {
@@ -135,7 +140,7 @@ public class WaveBlock {
     }
 
     public WaveBlock setTab(WaveTab tab) {
-        itemSet.group(tab.group);
+        this.tab = tab;
         return this;
     }
 
