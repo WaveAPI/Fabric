@@ -75,8 +75,8 @@ public class WaveBlock {
                 bl = (Block) ClassHelper.LoadOrGenerateCompoundClass(block.getClass().getName() + "$mcBlock",
                         new ClassHelper.Generator() {
                             @Override
-                            public Class<?> getBaseMethods() {
-                                return block.blockBase;
+                            public String[] getBaseMethods() {
+                                return new String[] {block.blockBase.getName()};
                             }
 
                             @Override
@@ -104,8 +104,8 @@ public class WaveBlock {
                     final Class<? extends BlockEntity> tile = (Class<? extends BlockEntity>) ClassHelper.LoadOrGenerateCompoundClass(block.getClass().getName() + "$mcTile",
                             new ClassHelper.Generator() {
                                 @Override
-                                public Class<?> getBaseMethods() {
-                                    return TileEntityWrapper.class;
+                                public String[] getBaseMethods() {
+                                    return new String[] {TileEntityWrapper.class.getName()};
                                 }
 
                                 @Override

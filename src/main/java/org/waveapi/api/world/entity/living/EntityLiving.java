@@ -1,35 +1,43 @@
 package org.waveapi.api.world.entity.living;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.World;
+import org.waveapi.api.content.entities.EntityCreation;
 import org.waveapi.api.world.entity.DamageSource;
 import org.waveapi.api.world.entity.EntityBase;
 
-public class EntityLiving extends EntityBase {
+import java.lang.reflect.InvocationTargetException;
 
-    public LivingEntity livingEntity;
+public class EntityLiving extends EntityBase {
+    
 
     public EntityLiving(LivingEntity livingEntity) {
         super(livingEntity);
-        this.livingEntity = livingEntity;
+        entity = livingEntity;
+    }
+
+    public EntityLiving(EntityCreation e) {
+        try {
+           entity = (LivingEntity) e.eClass.getConstructor(EntityType.class, World.class, EntityBase.class).newInstance(e.type, e.world, this);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public float getHeadYaw() {
-        return livingEntity.headYaw;
+        return ((LivingEntity)entity).headYaw;
     }
 
     public float getHealth() {
-        return livingEntity.getHealth();
+        return ((LivingEntity)entity).getHealth();
     }
 
     public void setHealth(float health) {
-        livingEntity.setHealth(health);
+        ((LivingEntity)entity).setHealth(health);
     }
 
     public float getMaxHealth() {
-        return livingEntity.getMaxHealth();
-    }
-
-    public void damage(DamageSource source, float amount) {
-        livingEntity.damage(source.getSource(entity.world), amount);
+        return ((LivingEntity)entity).getMaxHealth();
     }
 }

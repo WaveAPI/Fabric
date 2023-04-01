@@ -23,7 +23,10 @@ public class ClassHelper {
     }
 
     public interface Generator {
-        Class<?> getBaseMethods();
+        String[] getBaseMethods();
+        default String[] extras() {
+            return new String[] {};
+        }
         List<String> getInterfaces();
     }
 
@@ -33,23 +36,35 @@ public class ClassHelper {
             CtClass ctClass = pool.makeClass(name);
             ctClass.defrost();
             try {
-                CtClass baseClass = pool.getCtClass(generator.getBaseMethods().getName());
+                String[] base = generator.getBaseMethods();
+                CtClass baseClass = pool.getCtClass(base[0]);
                 ctClass.setSuperclass(baseClass.getSuperclass());
-
-                for (CtField field : baseClass.getDeclaredFields()) {
-                    ctClass.addField(new CtField(field, ctClass));
-                }
-
-                for (CtClass interface_ : baseClass.getInterfaces()) {
-                    ctClass.addInterface(interface_);
-                }
 
                 for (CtConstructor constructor : baseClass.getDeclaredConstructors()) {
                     ctClass.addConstructor(new CtConstructor(constructor, ctClass, null));
                 }
 
-                for (CtMethod method : baseClass.getDeclaredMethods()) {
-                    ctClass.addMethod(new CtMethod(method, ctClass, null));
+                for (String extra : base) {
+                    CtClass cls = pool.getCtClass(extra);
+                    for (CtMethod method : cls.getDeclaredMethods()) {
+                        String lName = method.getLongName();
+                        boolean notContainsMethod = Arrays.stream(ctClass.getDeclaredMethods()).noneMatch(
+                                (x) -> x.getLongName().equals(lName)
+                        );
+                        if (notContainsMethod) {
+                            ctClass.addMethod(new CtMethod(method, ctClass, null));
+                        }
+                    }
+
+                    for (CtField field : cls.getDeclaredFields()) {
+
+                        boolean notContainsField = Arrays.stream(ctClass.getDeclaredFields()).noneMatch(
+                                (x) -> x.getName().equals(field.getName())
+                        );
+                        if (notContainsField) {
+                            ctClass.addField(new CtField(field, ctClass));
+                        }
+                    }
                 }
 
                 for (String impl : generator.getInterfaces()) {
