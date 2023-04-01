@@ -2,6 +2,7 @@ package org.waveapi.ticker.tickers;
 
 import net.minecraft.block.entity.BlockEntity;
 import org.waveapi.api.content.items.block.blockentities.DeltaTicking;
+import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
 import org.waveapi.ticker.DeltaTickManager;
 import org.waveapi.ticker.DeltaTicker;
 
@@ -39,7 +40,7 @@ public class LimitedPerTick implements DeltaTicker {
                 return;
             }
             tickWrap deltaTicking = this.ticking.get(i);
-            if (deltaTicking.ticking instanceof BlockEntity && ((BlockEntity) deltaTicking.ticking).isRemoved()) {
+            if (deltaTicking.ticking instanceof WaveTileEntity && ((WaveTileEntity) deltaTicking.ticking).blockEntity.isRemoved()) {
                 ticking.remove(i);
             }
             deltaTicking.ticking.tick((int) (currentTick - deltaTicking.lastTick));
