@@ -10,6 +10,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.util.Identifier;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
@@ -141,6 +142,11 @@ public class WaveBlock {
 
     public WaveBlock setTab(WaveTab tab) {
         this.tab = tab;
+        return this;
+    }
+
+    public WaveBlock setHardness(float hardness) {
+        this.settings.hardness(hardness);
         return this;
     }
 
