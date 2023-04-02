@@ -23,6 +23,7 @@ public class DeltaTickManager {
         File cfg = new File(Main.mainFolder, "deltaTickingSettings.yml");
         if (!cfg.exists()) {
             try {
+                cfg.getParentFile().mkdirs();
                 Files.write(cfg.toPath(), ("ticker: LimitedPerTick\n" +
                                             "tickersPerTick: 100").getBytes(), StandardOpenOption.CREATE_NEW);
             } catch (IOException e) {
