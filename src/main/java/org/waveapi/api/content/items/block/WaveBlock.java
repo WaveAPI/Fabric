@@ -223,7 +223,6 @@ public class WaveBlock {
                 "      \"rolls\": 1.0,\n" +
                 "      \"bonus_rolls\": 0.0,\n" +
                 "      \"entries\": [\n");
-        System.out.println(file.getPath());
         for (int i = 0 ; i < drop.length ; i++) {
             drop[i].write(builder);
             if (i < drop.length - 1) {
