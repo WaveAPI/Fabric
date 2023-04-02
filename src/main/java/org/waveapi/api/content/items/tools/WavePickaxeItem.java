@@ -18,7 +18,7 @@ public class WavePickaxeItem extends WaveItem {
 
     @Override
     public void registerLocal() {
-        TagHelper.addTag("fabric", "items/pickaxe", mod.name + ":" + id);
+        TagHelper.addTag("fabric", "items/pickaxes", mod.name + ":" + id);
         baseRegister(new CustomPickaxeWrap(material.material, damage, speed, settings, this));
     }
 
