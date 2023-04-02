@@ -21,25 +21,33 @@ import java.util.LinkedList;
 import static org.waveapi.Main.bake;
 
 public class WaveItem {
-    private final String id;
-    private final WaveMod mod;
+    protected final String id;
+    protected final WaveMod mod;
 
-    private Item item;
+    protected Item item;
 
-    private Item.Settings settings;
+    protected Item.Settings settings;
 
-    private static LinkedList<WaveItem> toRegister = new LinkedList<>();
-    private WaveTab tab;
+    protected static LinkedList<WaveItem> toRegister = new LinkedList<>();
+    protected WaveTab tab;
 
     public static void register() {
         for (WaveItem item : toRegister) {
-            item.item = Registry.register(Registries.ITEM, new Identifier(item.mod.name, item.id), new CustomItemWrap(item.settings, item));
-            if (item.tab != null) {
-                item.tab.items.add(item.item.getDefaultStack());
-            }
-            item.settings = null;
+            item.registerLocal();
         }
         toRegister = null;
+    }
+
+    public void baseRegister(Item item) {
+        this.item = Registry.register(Registries.ITEM, new Identifier(mod.name, id), item);
+        if (tab != null) {
+            tab.items.add(item.getDefaultStack());
+        }
+        settings = null;
+    }
+    
+    public void registerLocal() {
+        baseRegister(new CustomItemWrap(settings, this));
     }
 
     public WaveItem(String id, WaveMod mod) {

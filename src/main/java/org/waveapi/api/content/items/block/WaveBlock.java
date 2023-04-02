@@ -21,11 +21,10 @@ import org.waveapi.api.content.items.block.model.BlockModel;
 import org.waveapi.api.content.items.drop.Drop;
 import org.waveapi.api.content.items.drop.ItemDrop;
 import org.waveapi.api.misc.Side;
-import org.waveapi.api.world.inventory.ItemStack;
 import org.waveapi.api.world.world.BlockState;
-import org.waveapi.content.items.BlockHelper;
-import org.waveapi.content.items.CustomBlockWrap;
-import org.waveapi.content.items.TileEntityWrapper;
+import org.waveapi.content.items.blocks.BlockHelper;
+import org.waveapi.content.items.blocks.CustomBlockWrap;
+import org.waveapi.content.items.blocks.TileEntityWrapper;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
 import org.waveapi.content.resources.TagHelper;
@@ -39,7 +38,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.waveapi.Main.bake;
 

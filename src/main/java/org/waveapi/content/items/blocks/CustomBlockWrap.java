@@ -1,4 +1,4 @@
-package org.waveapi.content.items;
+package org.waveapi.content.items.blocks;
 
 import net.minecraft.block.Block;
 import org.waveapi.api.content.items.block.WaveBlock;

@@ -2,7 +2,7 @@ package org.waveapi.api.world.world;
 
 import net.minecraft.block.Block;
 import org.waveapi.api.content.items.block.WaveBlock;
-import org.waveapi.content.items.WaveBlockBased;
+import org.waveapi.content.items.blocks.WaveBlockBased;
 
 public class BlockState {
 
