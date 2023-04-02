@@ -12,6 +12,7 @@ import org.waveapi.api.misc.Side;
 import org.waveapi.content.entity.EntityHelper;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
+import org.waveapi.content.resources.TagHelper;
 import org.waveapi.utils.FileUtil;
 
 import java.io.File;
@@ -77,6 +78,8 @@ public class Main implements ModInitializer {
 		WaveBlock.register();
 
 		WaveEntityType.register();
+
+		TagHelper.write();
 
 		if (Side.isClient()) {
 			LangManager.write();

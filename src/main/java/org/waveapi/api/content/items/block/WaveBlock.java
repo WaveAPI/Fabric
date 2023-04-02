@@ -28,6 +28,7 @@ import org.waveapi.content.items.CustomBlockWrap;
 import org.waveapi.content.items.TileEntityWrapper;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
+import org.waveapi.content.resources.TagHelper;
 import org.waveapi.utils.ClassHelper;
 
 import java.io.File;
@@ -246,4 +247,38 @@ public class WaveBlock {
 
         return this;
     }
+
+    public WaveBlock setMiningLevelRequired(int level) {
+        if (level > 0) {
+            settings.requiresTool();
+        }
+        if (!bake) return this;
+        TagHelper.addTag("fabric", "blocks/needs_tool_level_" + level, this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public WaveBlock makePickaxeEffective() {
+        if (!bake) return this;
+        TagHelper.addTag("minecraft", "blocks/mineable/pickaxe", this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public WaveBlock makeAxeEffective() {
+        if (!bake) return this;
+        TagHelper.addTag("minecraft", "blocks/mineable/axe", this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public WaveBlock makeShovelEffective() {
+        if (!bake) return this;
+        TagHelper.addTag("minecraft", "blocks/mineable/shovel", this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public WaveBlock makeHoeEffective() {
+        if (!bake) return this;
+        TagHelper.addTag("minecraft", "blocks/mineable/hoe", this.mod.name + ":" + this.id);
+        return this;
+    }
+
 }
