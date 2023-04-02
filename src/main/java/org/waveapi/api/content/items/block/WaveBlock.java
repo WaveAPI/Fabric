@@ -10,15 +10,18 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.util.Identifier;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
+import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.content.items.WaveTab;
 import org.waveapi.api.content.items.block.blockentities.TileEntityBlock;
 import org.waveapi.api.content.items.block.blockentities.TileEntityCreation;
 import org.waveapi.api.content.items.block.model.BlockModel;
+import org.waveapi.api.content.items.drop.Drop;
+import org.waveapi.api.content.items.drop.ItemDrop;
 import org.waveapi.api.misc.Side;
+import org.waveapi.api.world.inventory.ItemStack;
 import org.waveapi.api.world.world.BlockState;
 import org.waveapi.content.items.BlockHelper;
 import org.waveapi.content.items.CustomBlockWrap;
@@ -27,10 +30,15 @@ import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
 import org.waveapi.utils.ClassHelper;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.waveapi.Main.bake;
 
@@ -46,6 +54,7 @@ public class WaveBlock {
     private Class<CustomBlockWrap> blockBase;
     private boolean hasItem = true;
     private WaveTab tab;
+    private WaveItem item;
 
     public WaveBlock(String id, WaveMod mod, BlockMaterial material) {
         this.id = id;
@@ -92,11 +101,12 @@ public class WaveBlock {
             }
 
             block.block = Registry.register(Registries.BLOCK, new Identifier(block.mod.name, block.id), bl);
-            if (block.hasItem()) {
+            if (block.hasItem()) { // TODO: replace after creating WaveBlockItem
                 Item item = Registry.register(Registries.ITEM, new Identifier(block.mod.name, block.id), new BlockItem(block.block, itemSet));
                 if (block.tab != null) {
                     block.tab.items.add(item.getDefaultStack());
                 }
+                block.item = new WaveItem(item);
             }
             if (block instanceof TileEntityBlock) {
                 try {
@@ -187,5 +197,53 @@ public class WaveBlock {
 
     public BlockState getDefaultState() {
         return new BlockState(block.getDefaultState());
+    }
+
+    public WaveBlock setDrop() {
+        return setDrop(new Drop[] {new ItemDrop(this.mod.name + ":" + this.id)});
+    }
+
+    public WaveItem getItem() {
+        return item;
+    }
+
+    public ItemDrop getAsSimpleDrop() {
+        return new ItemDrop(mod.name + ":" + id);
+    }
+
+    public WaveBlock setDrop(Drop[] drop) {
+        if (!bake) {
+            return this;
+        }
+        File file = new File(ResourcePackManager.getInstance().getPackDir(), "data/" + mod.name + "/loot_tables/blocks/" + this.id + ".json");
+        file.getParentFile().mkdirs();
+        StringBuilder builder = new StringBuilder("{\n" +
+                "  \"type\": \"minecraft:block\",\n" +
+                "  \"pools\": [\n" +
+                "    {\n" +
+                "      \"rolls\": 1.0,\n" +
+                "      \"bonus_rolls\": 0.0,\n" +
+                "      \"entries\": [\n");
+        System.out.println(file.getPath());
+        for (int i = 0 ; i < drop.length ; i++) {
+            drop[i].write(builder);
+            if (i < drop.length - 1) {
+                builder.append(",");
+            }
+        }
+        builder.append("""
+                            ]
+                        }
+                    ]
+                }""");
+
+
+        try {
+            Files.write(file.toPath(), builder.toString().getBytes(), StandardOpenOption.CREATE_NEW);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return this;
     }
 }
