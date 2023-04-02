@@ -1,7 +1,12 @@
 package org.waveapi.content.items.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import org.waveapi.api.content.items.block.WaveBlock;
+import org.waveapi.api.world.world.World;
 
 public class CustomBlockWrap extends Block implements WaveBlockBased {
     private final WaveBlock block;
@@ -14,5 +19,12 @@ public class CustomBlockWrap extends Block implements WaveBlockBased {
     @Override
     public WaveBlock getWaveBlock() {
         return block;
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        block.onRandomTick(new org.waveapi.api.world.world.BlockState(state),
+                new org.waveapi.api.math.BlockPos(pos),
+                new World(world));
     }
 }

@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.SugarCaneBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
@@ -20,8 +21,10 @@ import org.waveapi.api.content.items.block.blockentities.TileEntityCreation;
 import org.waveapi.api.content.items.block.model.BlockModel;
 import org.waveapi.api.content.items.drop.Drop;
 import org.waveapi.api.content.items.drop.ItemDrop;
+import org.waveapi.api.math.BlockPos;
 import org.waveapi.api.misc.Side;
 import org.waveapi.api.world.world.BlockState;
+import org.waveapi.api.world.world.World;
 import org.waveapi.content.items.blocks.BlockHelper;
 import org.waveapi.content.items.blocks.CustomBlockWrap;
 import org.waveapi.content.items.blocks.TileEntityWrapper;
@@ -38,6 +41,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static org.waveapi.Main.bake;
 
@@ -147,6 +151,13 @@ public class WaveBlock {
             }
         }
         toRegister = null;
+    }
+
+    public void enableRandomTick() {
+        settings.ticksRandomly();
+    }
+    public void onRandomTick(BlockState state, BlockPos pos, World world) {
+
     }
 
     public WaveBlock setTab(WaveTab tab) {
