@@ -10,8 +10,8 @@ import org.waveapi.content.items.CustomSwordWrap;
 
 public class WaveSwordItem extends WaveItem {
     private final WaveToolMaterial material;
-    private float speed;
-    private int damage;
+    private float speed = 3.4f;
+    private int damage = 1;
 
     public WaveSwordItem(String id, WaveMod mod, WaveToolMaterial material) {
         super(id, mod);
