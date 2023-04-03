@@ -23,8 +23,6 @@ public class CustomPickaxeWrap extends PickaxeItem {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack item;
-        item = null;
-        item.getItem();
         UseHand useHand;
         if (hand == Hand.MAIN_HAND) {
             item = user.getMainHandStack();
