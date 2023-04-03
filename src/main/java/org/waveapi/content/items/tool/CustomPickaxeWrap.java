@@ -1,21 +1,16 @@
 package org.waveapi.content.items.tool;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.waveapi.api.content.items.tools.WavePickaxeItem;
-import org.waveapi.api.world.entity.living.EntityLiving;
 import org.waveapi.api.world.entity.living.EntityPlayer;
 import org.waveapi.api.world.inventory.ItemUseResult;
 import org.waveapi.api.world.inventory.UseHand;
-import org.waveapi.content.entity.EntityHelper;
 
 public class CustomPickaxeWrap extends PickaxeItem {
 
@@ -46,17 +41,5 @@ public class CustomPickaxeWrap extends PickaxeItem {
         }
     }
 
-    @Override
-    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (item.onPostMine(
-                new org.waveapi.api.world.inventory.ItemStack(stack),
-                new org.waveapi.api.world.world.World(world),
-                new org.waveapi.api.world.world.BlockState(state),
-                new org.waveapi.api.math.BlockPos(pos),
-                (EntityLiving) EntityHelper.wrap(miner))) {
-            return super.postMine(stack, world, state, pos, miner);
-        }
-
-        return true;
-    }
+    //AUTO:COMMON_TOOL
 }
