@@ -1,6 +1,5 @@
 package org.waveapi.file.texture;
 
-import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 
 import java.io.File;
@@ -8,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Random;
 
 public class Texture {
 

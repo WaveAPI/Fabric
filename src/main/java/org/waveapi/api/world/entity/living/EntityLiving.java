@@ -4,7 +4,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.World;
 import org.waveapi.api.content.entities.EntityCreation;
-import org.waveapi.api.world.entity.DamageSource;
 import org.waveapi.api.world.entity.EntityBase;
 
 import java.lang.reflect.InvocationTargetException;

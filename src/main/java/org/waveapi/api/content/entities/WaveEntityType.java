@@ -6,8 +6,6 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -22,7 +20,6 @@ import org.waveapi.api.world.entity.living.EntityLiving;
 import org.waveapi.content.entity.EntityHelper;
 import org.waveapi.utils.ClassHelper;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 

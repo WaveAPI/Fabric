@@ -1,7 +1,6 @@
 package org.waveapi.api.content.items.drop;
 
 import org.waveapi.api.content.items.WaveItem;
-import org.waveapi.api.math.BlockPos;
 
 import java.util.LinkedList;
 import java.util.List;

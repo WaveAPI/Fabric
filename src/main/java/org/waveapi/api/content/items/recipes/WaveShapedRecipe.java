@@ -1,6 +1,5 @@
 package org.waveapi.api.content.items.recipes;
 
-import net.minecraft.item.SwordItem;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.WaveItem;
 

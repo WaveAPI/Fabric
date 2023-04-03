@@ -1,6 +1,5 @@
 package org.waveapi.ticker.tickers;
 
-import net.minecraft.block.entity.BlockEntity;
 import org.waveapi.api.content.items.block.blockentities.DeltaTicking;
 import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
 import org.waveapi.ticker.DeltaTickManager;

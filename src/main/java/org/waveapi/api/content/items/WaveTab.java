@@ -1,7 +1,6 @@
 package org.waveapi.api.content.items;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.fabricmc.fabric.impl.itemgroup.FabricItemGroupBuilderImpl;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -11,7 +10,6 @@ import org.waveapi.api.content.items.models.SimpleItemModel;
 import org.waveapi.api.misc.Side;
 import org.waveapi.content.resources.LangManager;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
