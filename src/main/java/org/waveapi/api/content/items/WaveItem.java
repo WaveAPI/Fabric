@@ -31,6 +31,8 @@ public class WaveItem {
     protected static LinkedList<WaveItem> toRegister = new LinkedList<>();
     protected WaveTab tab;
 
+    public boolean superWrap;
+
     public static void register() {
         for (WaveItem item : toRegister) {
             item.registerLocal();

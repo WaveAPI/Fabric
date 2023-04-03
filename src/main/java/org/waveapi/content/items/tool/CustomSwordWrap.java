@@ -1,23 +1,42 @@
-package org.waveapi.content.items;
+package org.waveapi.content.items.tool;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.waveapi.api.content.items.WaveItem;
+import org.waveapi.api.content.items.tools.WaveSwordItem;
+import org.waveapi.api.world.entity.living.EntityLiving;
 import org.waveapi.api.world.entity.living.EntityPlayer;
 import org.waveapi.api.world.inventory.ItemUseResult;
 import org.waveapi.api.world.inventory.UseHand;
+import org.waveapi.content.entity.EntityHelper;
 
 public class CustomSwordWrap extends SwordItem {
 
-    private final WaveItem item;
-    public CustomSwordWrap(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings, WaveItem item) {
+    private final WaveSwordItem item;
+    public CustomSwordWrap(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings, WaveSwordItem item) {
         super(toolMaterial, attackDamage, attackSpeed, settings);
         this.item = item;
+    }
+
+    @Override
+    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+        if (item.onPostMine(
+                new org.waveapi.api.world.inventory.ItemStack(stack),
+                new org.waveapi.api.world.world.World(world),
+                new org.waveapi.api.world.world.BlockState(state),
+                new org.waveapi.api.math.BlockPos(pos),
+                (EntityLiving)EntityHelper.wrap(miner))) {
+            return super.postMine(stack, world, state, pos, miner);
+        }
+
+        return true;
     }
 
     @Override

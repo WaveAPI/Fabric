@@ -2,8 +2,12 @@ package org.waveapi.api.content.items.tools;
 
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.WaveItem;
-import org.waveapi.content.items.CustomHoeWrap;
-import org.waveapi.content.items.CustomShovelWrap;
+import org.waveapi.api.math.BlockPos;
+import org.waveapi.api.world.entity.living.EntityLiving;
+import org.waveapi.api.world.inventory.ItemStack;
+import org.waveapi.api.world.world.BlockState;
+import org.waveapi.api.world.world.World;
+import org.waveapi.content.items.tool.CustomShovelWrap;
 import org.waveapi.content.resources.TagHelper;
 
 public class WaveShovelItem extends WaveItem {
@@ -29,6 +33,10 @@ public class WaveShovelItem extends WaveItem {
     public WaveShovelItem setAttackSpeed(float speed) {
         this.speed = speed;
         return this;
+    }
+
+    public boolean onPostMine(ItemStack itemStack, World world, BlockState blockState, BlockPos pos, EntityLiving entity) {
+        return true;
     }
 
 }

@@ -1,12 +1,13 @@
 package org.waveapi.api.content.items.tools;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.WaveItem;
-import org.waveapi.content.items.CustomItemWrap;
-import org.waveapi.content.items.CustomSwordWrap;
+import org.waveapi.api.math.BlockPos;
+import org.waveapi.api.world.entity.living.EntityLiving;
+import org.waveapi.api.world.inventory.ItemStack;
+import org.waveapi.api.world.world.BlockState;
+import org.waveapi.api.world.world.World;
+import org.waveapi.content.items.tool.CustomSwordWrap;
 
 public class WaveSwordItem extends WaveItem {
     private final WaveToolMaterial material;
@@ -32,4 +33,7 @@ public class WaveSwordItem extends WaveItem {
         return this;
     }
 
+    public boolean onPostMine(ItemStack itemStack, World world, BlockState blockState, BlockPos pos, EntityLiving entity) {
+        return true;
+    }
 }
