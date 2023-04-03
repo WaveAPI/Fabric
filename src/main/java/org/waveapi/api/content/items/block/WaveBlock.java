@@ -257,6 +257,8 @@ public class WaveBlock {
         return this;
     }
 
+    public WaveBlock setDrop(Drop drop) {return this.setDrop(new Drop[]{drop}); }
+
     public WaveBlock setMiningLevelRequired(int level) {
         if (level > 0) {
             settings.requiresTool();
