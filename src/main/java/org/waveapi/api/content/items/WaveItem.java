@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
 import org.waveapi.api.misc.Side;
@@ -15,8 +16,12 @@ import org.waveapi.api.world.world.World;
 import org.waveapi.content.items.CustomItemWrap;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
+import org.waveapi.utils.ClassHelper;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.waveapi.Main.bake;
 
@@ -26,12 +31,13 @@ public class WaveItem {
 
     protected Item item;
 
-    protected Item.Settings settings;
+    public Item.Settings settings;
 
     protected static LinkedList<WaveItem> toRegister = new LinkedList<>();
     protected WaveTab tab;
-
     public boolean superWrap;
+
+    protected String[] base;
 
     public static void register() {
         for (WaveItem item : toRegister) {
@@ -40,7 +46,30 @@ public class WaveItem {
         toRegister = null;
     }
 
-    public void baseRegister(Item item) {
+    public void baseRegister() {
+        Item item = null;
+        try {
+            item = (Item) ClassHelper.LoadOrGenerateCompoundClass(this.mod.getClass().getPackageName() + "." + id + "$mcItem", new ClassHelper.Generator() {
+                @Override
+                public String[] getBaseMethods() {
+                    return base;
+                }
+
+                @Override
+                public List<String> getInterfaces() {
+                    return new ArrayList<>();
+                }
+            }, Main.bake).getConstructor(WaveItem.class).newInstance(this);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
+
         this.item = Registry.register(Registries.ITEM, new Identifier(mod.name, id), item);
         if (tab != null) {
             tab.items.add(item.getDefaultStack());
@@ -49,7 +78,10 @@ public class WaveItem {
     }
     
     public void registerLocal() {
-        baseRegister(new CustomItemWrap(settings, this));
+        this.base = new String[] {
+                CustomItemWrap.class.getName()
+        };
+        baseRegister();
     }
 
     public WaveItem(String id, WaveMod mod) {

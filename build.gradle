@@ -37,24 +37,6 @@ dependencies {
 	inlcudeInJar group: 'org.javassist', name: 'javassist', version: '3.29.2-GA'
 }
 
-def tokens = []
-
-task generateSources(type: Copy) {
-	from 'src/main/java'
-	into "$buildDir/generated-src"
-	filter {
-		line -> {
-			if (line.contains("//AUTO:")) {
-				return new File("./auto_completes/" + line.split("//AUTO:")[1].trim()).text
-			}
-			return line
-		}
-	}
-}
-
-compileJava.source = "$buildDir/generated-src"
-compileJava.dependsOn generateSources
-
 processResources {
 	inputs.property "version", project.version
 
