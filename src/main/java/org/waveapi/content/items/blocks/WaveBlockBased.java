@@ -1,4 +1,4 @@
-package org.waveapi.content.items;
+package org.waveapi.content.items.blocks;
 
 import org.waveapi.api.content.items.block.WaveBlock;
 

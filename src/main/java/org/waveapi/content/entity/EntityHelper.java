@@ -7,6 +7,8 @@ import org.waveapi.api.world.entity.EntityBase;
 import org.waveapi.api.world.entity.interfaces.FlyingItemBasedEntity;
 import org.waveapi.api.world.entity.living.EntityLiving;
 import org.waveapi.api.world.entity.living.EntityPlayer;
+import org.waveapi.content.entity.wraps.EntityWrap;
+import org.waveapi.content.entity.wraps.living.EntityLivingWrap;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -19,7 +21,7 @@ public class EntityHelper {
     public static EntityBase wrap(Entity entity) {
         if (entity instanceof LivingEntity) {
             if (entity instanceof PlayerEntity) {
-                return  new EntityPlayer((PlayerEntity) entity);
+                return new EntityPlayer((PlayerEntity) entity);
             }
             return new EntityLiving((LivingEntity) entity);
         }
@@ -28,16 +30,40 @@ public class EntityHelper {
 
     public static Map<String, String> entityPossibleInterfaces;
 
-    public static void populateEntityPossibleInterfaces() {
+    public static Map<String, String[]> entityPossibleBases;
+
+    public static void populatePossibilities() {
         entityPossibleInterfaces = new HashMap<>();
+        entityPossibleBases = new HashMap<>();
         entityPossibleInterfaces.put(FlyingItemBasedEntity.class.getName(), FlyingItemBasedEntity.impl.class.getName());
+
+        entityPossibleBases.put(EntityBase.class.getName(),
+                new String[]{EntityWrap.class.getName()});
+        entityPossibleBases.put(EntityLiving.class.getName(),
+                new String[]{EntityLivingWrap.class.getName()});
+    }
+
+    public static <T extends EntityBase> String[] searchUpBase(Class<T> entity) {
+
+        if (entityPossibleInterfaces == null) {
+            populatePossibilities();
+        }
+
+        String base = null;
+        Class<?> parent = entity.getSuperclass();
+        while (parent != null && base == null) {
+            base = parent.getName();
+            parent = parent.getSuperclass();
+        }
+
+        return entityPossibleBases.get(base);
     }
 
     public static <T extends EntityBase> List<String> searchUp(Class<T> entity) {
         List<String> list = new LinkedList<>();
 
         if (entityPossibleInterfaces == null) {
-            populateEntityPossibleInterfaces();
+            populatePossibilities();
         }
 
         for (Type type : entity.getGenericInterfaces()) {

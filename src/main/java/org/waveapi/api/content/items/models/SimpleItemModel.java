@@ -1,45 +1,40 @@
 package org.waveapi.api.content.items.models;
 
 import org.waveapi.api.content.items.WaveItem;
+import org.waveapi.file.texture.Texture;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 
 public class SimpleItemModel extends ItemModel {
 
-    public String path;
+    private Texture texture;
+
     public SimpleItemModel (String texturePath) {
-        path = texturePath;
+        this(new Texture(texturePath));
+    }
+
+    public SimpleItemModel(Texture texture) {
+        this.texture = texture;
     }
 
     @Override
     public void build(File pack, WaveItem item) {
         File model = new File(pack, "assets/" + item.getMod().name + "/models/item/" + item.getId() + ".json");
-        File texture = new File(pack, "assets/" + item.getMod().name + "/textures/item/" + item.getId() + ".png");
 
         model.getParentFile().mkdirs();
-        texture.getParentFile().mkdirs();
 
         try {
+            String tPath = texture.get(pack, item.getMod(), "item/" + item.getId());
             Files.write(model.toPath(), ("{\n" +
                     "  \"parent\": \"minecraft:item/generated\",\n" +
                     "  \"textures\": {\n" +
-                    "    \"layer0\": \"" + item.getMod().name + ":item/" + item.getId() + "\"\n" +
+                    "    \"layer0\": \"" + tPath + "\"\n" +
                     "  }\n" +
                     "}").getBytes());
 
-            InputStream in = item.getMod().getClass().getClassLoader().getResourceAsStream(path);
-            if (in == null) {
-                throw new RuntimeException("File " + path + " not found.");
-            }
 
-            if (texture.exists()) {
-                texture.delete();
-            }
-
-            Files.copy(in, texture.toPath());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

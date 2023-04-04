@@ -2,17 +2,21 @@ package org.waveapi.api.content.items.block.model;
 
 import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.content.items.block.WaveBlock;
+import org.waveapi.file.texture.Texture;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 
 public class SixSidedBlockModel extends BlockModel {
-    private String path;
+    private Texture texture;
 
     public SixSidedBlockModel (String texturePath) {
-        path = texturePath;
+        this(new Texture(texturePath));
+    }
+
+    public SixSidedBlockModel(Texture texture) {
+        this.texture = texture;
     }
 
     @Override
@@ -25,21 +29,19 @@ public class SixSidedBlockModel extends BlockModel {
         String name = block.getId() + additional;
         File model = new File(pack, "assets/" + block.getMod().name + "/models/block/" + name + ".json");
         File item = new File(pack, "assets/" + block.getMod().name + "/models/item/" + name + ".json");
-        File texture = new File(pack, "assets/" + block.getMod().name + "/textures/block/" + name + ".png");
         File state = new File(pack, "assets/" + block.getMod().name + "/blockstates/" + block.getId() + ".json");
 
 
         model.getParentFile().mkdirs();
         item.getParentFile().mkdirs();
-        texture.getParentFile().mkdirs();
         state.getParentFile().mkdirs();
 
         try {
-
+            String id = this.texture.get(pack, block.getMod(), "block/" + block.getId());
             Files.write(model.toPath(), ("{\n" +
                     "  \"parent\": \"minecraft:block/cube_all\",\n" +
                     "  \"textures\": {\n" +
-                    "    \"all\": \"" + block.getMod().name + ":block/" + name + "\"\n" +
+                    "    \"all\": \"" + id + "\"\n" +
                     "  }\n" +
                     "}").getBytes());
 
@@ -57,17 +59,6 @@ public class SixSidedBlockModel extends BlockModel {
                         "  }\n" +
                         "}").getBytes());
             }
-
-            InputStream in = block.getMod().getClass().getClassLoader().getResourceAsStream(path);
-            if (in == null) {
-                throw new RuntimeException("File " + path + " not found.");
-            }
-
-            if (texture.exists()) {
-                texture.delete();
-            }
-
-            Files.copy(in, texture.toPath());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

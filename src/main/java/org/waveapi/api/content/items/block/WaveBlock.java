@@ -8,25 +8,39 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
+import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.content.items.WaveTab;
 import org.waveapi.api.content.items.block.blockentities.TileEntityBlock;
 import org.waveapi.api.content.items.block.blockentities.TileEntityCreation;
 import org.waveapi.api.content.items.block.model.BlockModel;
+import org.waveapi.api.content.items.drop.Drop;
+import org.waveapi.api.content.items.drop.ItemDrop;
+import org.waveapi.api.math.BlockPos;
 import org.waveapi.api.misc.Side;
+import org.waveapi.api.world.entity.living.EntityPlayer;
+import org.waveapi.api.world.inventory.ItemUseResult;
+import org.waveapi.api.world.inventory.UseHand;
 import org.waveapi.api.world.world.BlockState;
-import org.waveapi.content.items.BlockHelper;
-import org.waveapi.content.items.CustomBlockWrap;
-import org.waveapi.content.items.TileEntityWrapper;
+import org.waveapi.api.world.world.World;
+import org.waveapi.content.items.blocks.BlockHelper;
+import org.waveapi.content.items.blocks.CustomBlockWrap;
+import org.waveapi.content.items.blocks.TileEntityWrapper;
 import org.waveapi.content.resources.LangManager;
 import org.waveapi.content.resources.ResourcePackManager;
+import org.waveapi.content.resources.TagHelper;
 import org.waveapi.utils.ClassHelper;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,6 +57,8 @@ public class WaveBlock {
 
     private Class<CustomBlockWrap> blockBase;
     private boolean hasItem = true;
+    private WaveTab tab;
+    private WaveItem item;
 
     public WaveBlock(String id, WaveMod mod, BlockMaterial material) {
         this.id = id;
@@ -60,7 +76,7 @@ public class WaveBlock {
 
     public WaveBlock(Block block) {
         this.block = block;
-        Identifier identifier = Registry.BLOCK.getId(block);
+        Identifier identifier = Registries.BLOCK.getId(block);
         mod = null;  // todo: change to actual mod
         id = identifier.getPath();
     }
@@ -73,8 +89,8 @@ public class WaveBlock {
                 bl = (Block) ClassHelper.LoadOrGenerateCompoundClass(block.getClass().getName() + "$mcBlock",
                         new ClassHelper.Generator() {
                             @Override
-                            public Class<?> getBaseMethods() {
-                                return block.blockBase;
+                            public String[] getBaseMethods() {
+                                return new String[] {block.blockBase.getName()};
                             }
 
                             @Override
@@ -88,9 +104,13 @@ public class WaveBlock {
                 throw new RuntimeException(e);
             }
 
-            block.block = Registry.register(Registry.BLOCK, new Identifier(block.mod.name, block.id), bl);
-            if (block.hasItem()) {
-                Registry.register(Registry.ITEM, new Identifier(block.mod.name, block.id), new BlockItem(block.block, itemSet));
+            block.block = Registry.register(Registries.BLOCK, new Identifier(block.mod.name, block.id), bl);
+            if (block.hasItem()) { // TODO: replace after creating WaveBlockItem
+                Item item = Registry.register(Registries.ITEM, new Identifier(block.mod.name, block.id), new BlockItem(block.block, itemSet));
+                if (block.tab != null) {
+                    block.tab.items.add(item.getDefaultStack());
+                }
+                block.item = new WaveItem(item);
             }
             if (block instanceof TileEntityBlock) {
                 try {
@@ -99,8 +119,8 @@ public class WaveBlock {
                     final Class<? extends BlockEntity> tile = (Class<? extends BlockEntity>) ClassHelper.LoadOrGenerateCompoundClass(block.getClass().getName() + "$mcTile",
                             new ClassHelper.Generator() {
                                 @Override
-                                public Class<?> getBaseMethods() {
-                                    return TileEntityWrapper.class;
+                                public String[] getBaseMethods() {
+                                    return new String[] {TileEntityWrapper.class.getName()};
                                 }
 
                                 @Override
@@ -111,7 +131,7 @@ public class WaveBlock {
                             , Main.bake);
                     entityType.set(block.block, tile);
 
-                    BlockEntityType<BlockEntity> entity = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(block.mod.name, block.id + "_tile"),
+                    BlockEntityType<BlockEntity> entity = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(block.mod.name, block.id + "_tile"),
                             FabricBlockEntityTypeBuilder.create(
                                     (pos, state) -> {
                                         try {
@@ -134,8 +154,20 @@ public class WaveBlock {
         toRegister = null;
     }
 
+    public void enableRandomTick() {
+        settings.ticksRandomly();
+    }
+    public void onRandomTick(BlockState state, BlockPos pos, World world) {
+
+    }
+
     public WaveBlock setTab(WaveTab tab) {
-        itemSet.group(tab.group);
+        this.tab = tab;
+        return this;
+    }
+
+    public WaveBlock setHardness(float hardness) {
+        this.settings.hardness(hardness);
         return this;
     }
 
@@ -176,5 +208,91 @@ public class WaveBlock {
 
     public BlockState getDefaultState() {
         return new BlockState(block.getDefaultState());
+    }
+
+    public WaveBlock setDrop() {
+        return setDrop(new Drop[] {new ItemDrop(this.mod.name + ":" + this.id)});
+    }
+
+    public WaveItem getItem() {
+        return item;
+    }
+
+    public ItemDrop getAsSimpleDrop() {
+        return new ItemDrop(mod.name + ":" + id);
+    }
+
+    public WaveBlock setDrop(Drop[] drop) {
+        if (!bake) {
+            return this;
+        }
+        File file = new File(ResourcePackManager.getInstance().getPackDir(), "data/" + mod.name + "/loot_tables/blocks/" + this.id + ".json");
+        file.getParentFile().mkdirs();
+        StringBuilder builder = new StringBuilder("{\n" +
+                "  \"type\": \"minecraft:block\",\n" +
+                "  \"pools\": [\n" +
+                "    {\n" +
+                "      \"rolls\": 1.0,\n" +
+                "      \"bonus_rolls\": 0.0,\n" +
+                "      \"entries\": [\n");
+        for (int i = 0 ; i < drop.length ; i++) {
+            drop[i].write(builder);
+            if (i < drop.length - 1) {
+                builder.append(",");
+            }
+        }
+        builder.append("""
+                            ]
+                        }
+                    ]
+                }""");
+
+
+        try {
+            Files.write(file.toPath(), builder.toString().getBytes(), StandardOpenOption.CREATE_NEW);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return this;
+    }
+
+    public WaveBlock setDrop(Drop drop) {return this.setDrop(new Drop[]{drop}); }
+
+    public WaveBlock setMiningLevelRequired(int level) {
+        if (level > 0) {
+            settings.requiresTool();
+        }
+        if (!bake) return this;
+        TagHelper.addTag("fabric", "blocks/needs_tool_level_" + level, this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public WaveBlock makePickaxeEffective() {
+        if (!bake) return this;
+        TagHelper.addTag("minecraft", "blocks/mineable/pickaxe", this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public WaveBlock makeAxeEffective() {
+        if (!bake) return this;
+        TagHelper.addTag("minecraft", "blocks/mineable/axe", this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public WaveBlock makeShovelEffective() {
+        if (!bake) return this;
+        TagHelper.addTag("minecraft", "blocks/mineable/shovel", this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public WaveBlock makeHoeEffective() {
+        if (!bake) return this;
+        TagHelper.addTag("minecraft", "blocks/mineable/hoe", this.mod.name + ":" + this.id);
+        return this;
+    }
+
+    public ItemUseResult onUse(BlockState blockState, BlockPos pos, World world, EntityPlayer entityPlayer, UseHand useHand) {
+        return null;
     }
 }

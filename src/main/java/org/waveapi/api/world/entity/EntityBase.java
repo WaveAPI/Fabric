@@ -13,9 +13,14 @@ import java.lang.reflect.InvocationTargetException;
 
 public class EntityBase {
     public Entity entity;
+    public boolean superWrap = false;
 
     public EntityBase(Entity entity) {
         this.entity = entity;
+    }
+
+    public EntityBase() {
+
     }
 
     public EntityBase(EntityCreation e) {
@@ -53,7 +58,7 @@ public class EntityBase {
     }
 
     public String getName() {
-        return entity.getName().asString();
+        return entity.getName().getString();
     }
 
     public boolean isAlive() {
@@ -76,9 +81,20 @@ public class EntityBase {
     }
 
     public boolean handleAttack() {
-        return false;
+        superWrap = true;
+        return entity.handleAttack(entity);
     }
-    public boolean onDamage(DamageSource source, float amount) {
-        return entity.damage(source.source, amount);
+    public boolean damage(DamageSource source, float amount) {
+        superWrap = true;
+        return entity.damage(source.getSource(getWorld().world), amount);
+    }
+
+    public org.waveapi.api.world.world.World getWorld() {
+        return new org.waveapi.api.world.world.World(this.entity.world);
+    }
+
+    public void tick() {
+        superWrap = true;
+        entity.tick();
     }
 }

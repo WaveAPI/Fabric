@@ -14,8 +14,8 @@ import org.waveapi.api.world.inventory.UseHand;
 public class CustomItemWrap extends Item {
 
     private final WaveItem item;
-    public CustomItemWrap(Settings settings, WaveItem item) {
-        super(settings);
+    public CustomItemWrap(WaveItem item) {
+        super(item.settings);
         this.item = item;
     }
 

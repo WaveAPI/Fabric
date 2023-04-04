@@ -18,6 +18,10 @@ public class World {
         world.spawnEntity(entity.entity);
     }
 
+    public BlockState getBlockState(BlockPos pos) {
+        return new BlockState(world.getBlockState(pos.pos));
+    }
+
     public boolean setBlockState(BlockPos pos, BlockState state) {
         return world.setBlockState(pos.pos, state.state);
     }

@@ -1,5 +1,6 @@
-package org.waveapi.content.items;
+package org.waveapi.content.items.blocks;
 
+import net.minecraft.block.Block;
 import org.waveapi.api.content.items.block.WaveBlock;
 import org.waveapi.api.content.items.block.blockentities.TileEntityBlock;
 import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
@@ -11,6 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 public class BlockHelper {
+
+    private static final Map<Block, WaveBlock> blocks = new HashMap<>();
+    public static WaveBlock of(Block block) {
+        return blocks.computeIfAbsent(block, WaveBlock::new);
+    }
     public static Map<String, String> blockPossibleInterfaces;
     public static Map<String, String> tilePossibleInterfaces;
 

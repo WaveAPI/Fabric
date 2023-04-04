@@ -1,6 +1,7 @@
 package org.waveapi.api.world.inventory;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
 
 public enum ItemUseResult {
@@ -24,6 +25,28 @@ public enum ItemUseResult {
             }
             case FAIL -> {
                 result = FAIL;
+            }
+        }
+
+        return result;
+    }
+
+    public static ActionResult to(ItemUseResult action) {
+        ActionResult result = null;
+
+        switch (action) {
+
+            case CONSUME -> {
+                result = ActionResult.CONSUME;
+            }
+            case FAIL -> {
+                result = ActionResult.FAIL;
+            }
+            case PASS -> {
+                result = ActionResult.PASS;
+            }
+            case SUCCESS -> {
+                result = ActionResult.SUCCESS;
             }
         }
 
