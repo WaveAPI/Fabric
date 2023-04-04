@@ -45,9 +45,16 @@ public class ClassHelper {
                 }
 
                 for (String extra : base) {
+
                     CtClass cls = pool.getCtClass(extra);
+
+                    for (CtClass interfce : cls.getInterfaces()) {
+                        ctClass.addInterface(interfce);
+                    }
+
                     for (CtMethod method : cls.getDeclaredMethods()) {
                         String lName = method.getLongName();
+
                         boolean notContainsMethod = Arrays.stream(ctClass.getDeclaredMethods()).noneMatch(
                                 (x) -> x.getLongName().equals(lName)
                         );
