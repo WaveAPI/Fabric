@@ -8,8 +8,8 @@ import org.waveapi.content.resources.TagHelper;
 
 public class WavePickaxeItem extends WaveCommonToolItem {
 
-    public WavePickaxeItem(String id, WaveMod mod, WaveToolMaterial material) {
-        super(id, mod, material);
+    public WavePickaxeItem(String id, WaveToolMaterial material, WaveMod mod) {
+        super(id, material, mod);
         speed = -2.8f;
         damage = 1;
     }

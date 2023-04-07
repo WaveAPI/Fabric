@@ -8,8 +8,8 @@ import org.waveapi.content.resources.TagHelper;
 
 public class WaveShovelItem extends WaveCommonToolItem {
 
-    public WaveShovelItem(String id, WaveMod mod, WaveToolMaterial material) {
-        super(id, mod, material);
+    public WaveShovelItem(String id, WaveToolMaterial material, WaveMod mod) {
+        super(id, material, mod);
         speed = -3.0f;
         damage = 0;
     }
