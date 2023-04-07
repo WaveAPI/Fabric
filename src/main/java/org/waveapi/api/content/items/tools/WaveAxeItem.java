@@ -8,8 +8,8 @@ import org.waveapi.content.resources.TagHelper;
 
 public class WaveAxeItem extends WaveCommonToolItem {
 
-    public WaveAxeItem(String id, WaveMod mod, WaveToolMaterial material) {
-        super(id, mod, material);
+    public WaveAxeItem(String id, WaveToolMaterial material, WaveMod mod) {
+        super(id, material, mod);
         speed = -3.2f;
         damage = 3;
     }

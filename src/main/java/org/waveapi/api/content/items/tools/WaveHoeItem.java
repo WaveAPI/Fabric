@@ -8,8 +8,8 @@ import org.waveapi.content.resources.TagHelper;
 
 public class WaveHoeItem extends WaveCommonToolItem {
 
-    public WaveHoeItem(String id, WaveMod mod, WaveToolMaterial material) {
-        super(id, mod, material);
+    public WaveHoeItem(String id, WaveToolMaterial material, WaveMod mod) {
+        super(id, material, mod);
         speed = -2.0f;
         damage = -(int) (material.material.getAttackDamage());
     }

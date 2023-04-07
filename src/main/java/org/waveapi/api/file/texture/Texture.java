@@ -1,4 +1,4 @@
-package org.waveapi.file.texture;
+package org.waveapi.api.file.texture;
 
 import org.waveapi.api.WaveMod;
 
@@ -19,6 +19,27 @@ public class Texture {
             resourceID = MISSING_TEXTURE;
         }
         this.path = path;
+    }
+
+    public String getWithMinecraftAsMod(File pack, WaveMod mod, String resourcePath) {
+        resourceIdCheck: if (resourceID == null) {
+            InputStream stream = mod.getResource(path);
+            if (stream == null) {
+                resourceID = MISSING_TEXTURE;
+                break resourceIdCheck;
+            }
+            resourceID = "minecraft:" + resourcePath;
+            File file = new File(new File(pack,"assets/minecraft/textures"),
+                    resourcePath + ".png");
+            try {
+                file.getParentFile().mkdirs();
+                Files.copy(stream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return resourceID;
     }
 
     /**

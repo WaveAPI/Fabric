@@ -1,7 +1,7 @@
 package org.waveapi.api.content.items.models;
 
 import org.waveapi.api.content.items.WaveItem;
-import org.waveapi.file.texture.Texture;
+import org.waveapi.api.file.texture.Texture;
 
 import java.io.File;
 import java.io.IOException;

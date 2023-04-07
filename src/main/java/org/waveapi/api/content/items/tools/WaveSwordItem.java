@@ -6,8 +6,8 @@ import org.waveapi.content.items.tool.CommonTool;
 import org.waveapi.content.items.tool.CustomSwordWrap;
 
 public class WaveSwordItem extends WaveCommonToolItem {
-    public WaveSwordItem(String id, WaveMod mod, WaveToolMaterial material) {
-        super(id, mod, material);
+    public WaveSwordItem(String id, WaveToolMaterial material, WaveMod mod) {
+        super(id, material, mod);
         speed = -2.4f;
         damage = 2;
     }
