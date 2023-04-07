@@ -12,12 +12,12 @@ import java.util.Map;
 
 import static org.waveapi.Main.bake;
 
-public class WaveShapedRecipe {
+public class WaveShapedRecipe { //TODO: REWRITE and use ingredients, maybe do something which is similar to drops
     private final WaveMod mod;
 
     private static LinkedList<WaveShapedRecipe> toRegister = new LinkedList<>();
     private final String[] pattern;
-    private final String result;
+    private String result;
 
     private final String name;
 
@@ -55,6 +55,15 @@ public class WaveShapedRecipe {
         }
 
         toRegister = null;
+    }
+
+    public WaveShapedRecipe setResultCount(int count) {
+        if (result.contains("\"count\":")) {
+            result = result.substring(0, result.indexOf("\"count\":") - 1) + ", \"count\":" + count + "}";
+        } else {
+            result = result.substring(0, result.length() - 1) + ", \"count\":" + count + "}";
+        }
+        return this;
     }
 
     public WaveShapedRecipe(String result, String[] pattern, WaveMod mod) {
