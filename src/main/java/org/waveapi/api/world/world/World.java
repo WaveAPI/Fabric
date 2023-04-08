@@ -34,7 +34,7 @@ public class World {
         return world.setBlockState(pos.pos, state.state);
     }
 
-    public <T extends WaveTileEntity> T getTileEntity(BlockPos pos, Class<T> tClass) {
+    public <T> T getTileEntity(BlockPos pos, Class<T> tClass) {
         BlockEntity entity = world.getBlockEntity(pos.pos);
         if (entity instanceof WaveTileEntityBased) {
             WaveTileEntity tile = ((WaveTileEntityBased) entity).getWaveTileEntity();
