@@ -41,22 +41,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.waveapi.Main.bake;
 
 public class WaveBlock extends WaveItem {
-    private Block block;
+    public Block block;
     private AbstractBlock.Settings blockSettings;
-
-    private static LinkedList<WaveBlock> toRegister = new LinkedList<>();
 
     public WaveBlock(String id, WaveMod mod, BlockMaterial material) {
         super(id, mod);
         this.blockSettings = FabricBlockSettings.of(material.mat);
-
-        toRegister.add(this);
     }
 
     public WaveBlock(String id, WaveMod mod) {
@@ -167,18 +162,6 @@ public class WaveBlock extends WaveItem {
             model.buildBlock(ResourcePackManager.getInstance().getPackDir(), this, true, true, "");
         }
         return this;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public WaveMod getMod() {
-        return mod;
-    }
-
-    public Block getBlock() {
-        return block;
     }
 
     public BlockState getDefaultState() {

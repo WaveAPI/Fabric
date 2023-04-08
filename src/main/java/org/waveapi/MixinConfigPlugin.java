@@ -24,6 +24,8 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
             long initialTime = System.currentTimeMillis();
             Main.LOGGER.info("Preloading");
 
+            new File("./waveAPI/classes").mkdirs();
+
             allowedMixins = new HashSet<>();
 
             DeltaTickManager.initialize();

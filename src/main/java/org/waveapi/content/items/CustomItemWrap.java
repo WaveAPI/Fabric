@@ -47,7 +47,9 @@ public class CustomItemWrap extends Item {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-
+        for (org.waveapi.api.misc.Text t : item.addToolTip(new org.waveapi.api.world.inventory.ItemStack(stack))) {
+            tooltip.add(t.text);
+        }
         super.appendTooltip(stack, world, tooltip, context);
     }
 }

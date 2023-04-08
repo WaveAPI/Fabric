@@ -8,7 +8,7 @@ import org.waveapi.api.content.items.block.WaveBlock;
 public class BlockItemWrap extends BlockItem {
     private final WaveItem item;
     public BlockItemWrap(WaveItem item) {
-        super(((WaveBlock)item).getBlock(), item.settings);
+        super(((WaveBlock)item).block, item.settings);
         this.item = item;
     }
 }

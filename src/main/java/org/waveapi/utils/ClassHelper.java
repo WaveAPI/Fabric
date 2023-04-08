@@ -92,7 +92,6 @@ public class ClassHelper {
                 }
 
                 ctClass.writeFile("./waveAPI/classes");
-                ctClass.freeze();
             } catch (CannotCompileException | NotFoundException | IOException e) {
                 throw new RuntimeException(e);
             }

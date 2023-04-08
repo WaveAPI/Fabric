@@ -42,13 +42,17 @@ public class WaveItem {
 
     public static void register() {
         for (WaveItem item : toRegister) {
-            item._registerLocal();
+            try {
+                item._registerLocal();
+            } catch (Exception e) {
+                throw new RuntimeException("Caused by " + item.mod.name, e);
+            }
         }
         toRegister = null;
     }
 
     public void baseRegister() {
-        Item item = null;
+        Item item;
         try {
             item = (Item) ClassHelper.LoadOrGenerateCompoundClass(this.mod.getClass().getPackageName() + "." + id + "$mcItem", new ClassHelper.Generator() {
                 @Override

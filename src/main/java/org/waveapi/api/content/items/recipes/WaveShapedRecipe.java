@@ -58,6 +58,7 @@ public class WaveShapedRecipe { //TODO: REWRITE and use ingredients, maybe do so
     }
 
     public WaveShapedRecipe setResultCount(int count) {
+        if (!bake) return this;
         if (result.contains("\"count\":")) {
             result = result.substring(0, result.indexOf("\"count\":") - 1) + ", \"count\":" + count + "}";
         } else {
@@ -85,6 +86,7 @@ public class WaveShapedRecipe { //TODO: REWRITE and use ingredients, maybe do so
     }
 
     public WaveShapedRecipe addIngredient(char symbol, String id) {
+        if (!bake) return this;
         ingredients.put(symbol, "{\"item\": \"" + id + "\"}");
         return this;
     }
