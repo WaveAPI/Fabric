@@ -40,10 +40,16 @@ public class WaveLoader {
 
         Map<String, Long> lastModified = new HashMap<>();
 
-        if (!FabricLoader.getInstance().isDevelopmentEnvironment()) {
+        String version = FabricLoader.getInstance().getModContainer("waveapi").get().getMetadata().getVersion().toString();
+
+        modifiedCheck: if (!FabricLoader.getInstance().isDevelopmentEnvironment()) {
             try {
                 if (modified.isFile()) {
                     FileInputStream in = new FileInputStream(modified);
+
+                    if (!version.equals(ByteUtils.readString(in))) {
+                        break modifiedCheck;
+                    }
 
                     while (in.available() > 0) {
                         lastModified.put(ByteUtils.readString(in), ByteUtils.readLong(in));
@@ -103,6 +109,7 @@ public class WaveLoader {
             modified.getParentFile().mkdirs();
             modified.createNewFile();
             FileOutputStream out = new FileOutputStream(modified);
+            out.write(ByteUtils.encodeString(version));
             for (Map.Entry<String, Long> entry : lastModified.entrySet()) {
                 out.write(ByteUtils.encodeString(entry.getKey()));
                 out.write(ByteUtils.encodeLong(entry.getValue()));
