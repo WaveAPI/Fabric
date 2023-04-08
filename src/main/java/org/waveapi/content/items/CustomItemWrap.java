@@ -16,7 +16,7 @@ import org.waveapi.api.world.inventory.UseHand;
 
 import java.util.List;
 
-public class CustomItemWrap extends Item {
+public class CustomItemWrap extends Item implements WaveItemBased {
 
     private final WaveItem item;
     public CustomItemWrap(WaveItem item) {
@@ -51,5 +51,10 @@ public class CustomItemWrap extends Item {
             tooltip.add(t.text);
         }
         super.appendTooltip(stack, world, tooltip, context);
+    }
+
+    @Override
+    public WaveItem getWave() {
+        return item;
     }
 }

@@ -1,7 +1,10 @@
 package org.waveapi.api.world.inventory;
 
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.world.entity.living.EntityPlayer;
+import org.waveapi.content.items.ItemHelper;
+import org.waveapi.content.items.WaveItemBased;
 
 public class ItemStack {
 
@@ -18,6 +21,10 @@ public class ItemStack {
     }
     public void setAmount(int amount) {
         this.itemStack.setCount(amount);
+    }
+
+    public WaveItem getItem() {
+        return itemStack.getItem() instanceof WaveItemBased wave ? wave.getWave() : ItemHelper.of(itemStack.getItem());
     }
 
     public void damage(int amount, EntityPlayer player) {
