@@ -91,6 +91,10 @@ public class WaveItem {
         toRegister.add(this);
     }
 
+    public void setDurability(int durability) {
+        settings.maxDamage(durability);
+    }
+
     public WaveItem(Item item) {
         Identifier identifier = Registries.ITEM.getId(item);
         this.id = identifier.getPath();
