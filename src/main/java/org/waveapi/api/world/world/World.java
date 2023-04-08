@@ -9,6 +9,8 @@ import org.waveapi.api.world.entity.EntityBase;
 import org.waveapi.api.world.inventory.ItemStack;
 import org.waveapi.content.items.blocks.WaveTileEntityBased;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class World {
     public final net.minecraft.world.World world;
 
@@ -41,9 +43,14 @@ public class World {
             } else {
                 return null;
             }
+        } else {
+            try {
+                return (T)tClass.getMethod("of", Object.class).invoke(null, entity);
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
-
-        return null;
     }
 
     public void dropItem(Vector3 position, ItemStack stack) {

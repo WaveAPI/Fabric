@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import org.waveapi.api.content.items.block.WaveBlock;
 import org.waveapi.api.content.items.block.blockentities.TileEntityBlock;
 import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
+import org.waveapi.api.content.items.block.blockentities.types.ContainerTile;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -61,5 +62,6 @@ public class BlockHelper {
 
     private static void populateTilePossibleInterfaces() {
         tilePossibleInterfaces = new HashMap<>();
+        tilePossibleInterfaces.put(ContainerTile.class.getName(), ContainerTile.impl.class.getName());
     }
 }
