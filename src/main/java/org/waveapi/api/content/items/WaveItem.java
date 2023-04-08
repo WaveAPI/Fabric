@@ -99,6 +99,7 @@ public class WaveItem {
         Identifier identifier = Registries.ITEM.getId(item);
         this.id = identifier.getPath();
         this.mod = null; // todo: change to actual mod
+        this.item = item;
     }
 
     public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand, EntityPlayer player, World world) {
