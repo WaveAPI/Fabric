@@ -55,4 +55,8 @@ public class World {
         world.breakBlock(pos.pos, shouldDrop);
     }
 
+    public void breakBlock(BlockPos pos, boolean shouldDrop, EntityBase entity) {
+        world.breakBlock(pos.pos, shouldDrop, entity.entity);
+    }
+
 }
