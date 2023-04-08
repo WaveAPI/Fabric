@@ -15,7 +15,7 @@ public class WaveHoeItem extends WaveCommonToolItem {
     }
 
     @Override
-    public void registerLocal() {
+    public void _registerLocal() {
         TagHelper.addTag("fabric", "items/hoes", mod.name + ":" + id);
         this.base = new String[] {
                 CustomHoeWrap.class.getName(),

@@ -23,7 +23,7 @@ public class WaveAxeItem extends WaveCommonToolItem {
         return this;
     }
     @Override
-    public void registerLocal() {
+    public void _registerLocal() {
         TagHelper.addTag("fabric", "items/axes", mod.name + ":" + id);
         this.base = new String[] {
                 CustomAxeWrap.class.getName(),

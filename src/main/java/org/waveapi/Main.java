@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.waveapi.api.WaveLoader;
 import org.waveapi.api.content.entities.WaveEntityType;
 import org.waveapi.api.content.items.WaveItem;
-import org.waveapi.api.content.items.block.WaveBlock;
 import org.waveapi.api.content.items.recipes.WaveShapedRecipe;
 import org.waveapi.api.misc.Side;
 import org.waveapi.content.entity.EntityHelper;
@@ -74,8 +73,6 @@ public class Main implements ModInitializer {
 		WaveShapedRecipe.build(new File(mainFolder, "resource_pack/data"));
 
 		WaveItem.register();
-
-		WaveBlock.register();
 
 		WaveEntityType.register();
 

@@ -8,6 +8,7 @@ import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
 import org.waveapi.api.misc.Side;
+import org.waveapi.api.misc.Text;
 import org.waveapi.api.world.entity.living.EntityPlayer;
 import org.waveapi.api.world.inventory.ItemStack;
 import org.waveapi.api.world.inventory.ItemUseResult;
@@ -41,7 +42,7 @@ public class WaveItem {
 
     public static void register() {
         for (WaveItem item : toRegister) {
-            item.registerLocal();
+            item._registerLocal();
         }
         toRegister = null;
     }
@@ -71,7 +72,7 @@ public class WaveItem {
         settings = null;
     }
     
-    public void registerLocal() {
+    public void _registerLocal() {
         this.base = new String[] {
                 CustomItemWrap.class.getName()
         };
@@ -133,6 +134,10 @@ public class WaveItem {
 
     public ItemStack getDefaultStack() {
         return new ItemStack(item.getDefaultStack());
+    }
+
+    public List<Text> addToolTip(ItemStack stack) {
+        return new ArrayList<>();
     }
 
 }

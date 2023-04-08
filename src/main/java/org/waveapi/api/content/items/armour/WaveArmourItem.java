@@ -16,7 +16,7 @@ public class WaveArmourItem extends WaveItem {
     }
 
     @Override
-    public void registerLocal() {
+    public void _registerLocal() {
         this.base = new String[] {
                 CustomArmourWrap.class.getName(),
                 CustomItemWrap.class.getName()

@@ -13,7 +13,7 @@ public class WaveSwordItem extends WaveCommonToolItem {
     }
 
     @Override
-    public void registerLocal() {
+    public void _registerLocal() {
         this.base = new String[] {
                 CustomSwordWrap.class.getName(),
                 CommonTool.class.getName(),

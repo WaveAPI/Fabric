@@ -1,15 +1,20 @@
 package org.waveapi.content.items;
 
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.world.entity.living.EntityPlayer;
 import org.waveapi.api.world.inventory.ItemUseResult;
 import org.waveapi.api.world.inventory.UseHand;
+
+import java.util.List;
 
 public class CustomItemWrap extends Item {
 
@@ -40,5 +45,9 @@ public class CustomItemWrap extends Item {
         }
     }
 
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 
+        super.appendTooltip(stack, world, tooltip, context);
+    }
 }

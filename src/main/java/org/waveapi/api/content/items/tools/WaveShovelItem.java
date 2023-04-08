@@ -15,7 +15,7 @@ public class WaveShovelItem extends WaveCommonToolItem {
     }
 
     @Override
-    public void registerLocal() {
+    public void _registerLocal() {
         TagHelper.addTag("fabric", "items/shovels", mod.name + ":" + id);
         this.base = new String[] {
                 CustomShovelWrap.class.getName(),

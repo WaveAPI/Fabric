@@ -15,7 +15,7 @@ public class WavePickaxeItem extends WaveCommonToolItem {
     }
 
     @Override
-    public void registerLocal() {
+    public void _registerLocal() {
         TagHelper.addTag("fabric", "items/pickaxes", mod.name + ":" + id);
         this.base = new String[] {
                 CustomPickaxeWrap.class.getName(),
