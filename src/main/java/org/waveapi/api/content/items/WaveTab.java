@@ -27,7 +27,7 @@ public class WaveTab {
     public WaveTab(String id, WaveItem item, WaveMod mod) {
         this.mod = mod;
         this.id = id;
-        group = FabricItemGroup.builder(new Identifier(mod.name, id)).icon(() -> new ItemStack(item.getItem())).entries(new ItemGroup.EntryCollector() {
+        group = FabricItemGroup.builder(new Identifier(mod.name, id)).icon(() -> new ItemStack(item._getItem())).entries(new ItemGroup.EntryCollector() {
             @Override
             public void accept(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries) {
                 entries.addAll(items);

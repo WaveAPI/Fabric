@@ -27,6 +27,10 @@ public class ItemStack {
         return itemStack.getItem() instanceof WaveItemBased wave ? wave.getWave() : ItemHelper.of(itemStack.getItem());
     }
 
+    public boolean is(WaveItem item) {
+        return itemStack.isOf(item._getItem());
+    }
+
     public void damage(int amount, EntityPlayer player) {
         if (player.playerEntity instanceof ServerPlayerEntity) {
             boolean broken = itemStack.damage(amount, player.playerEntity.getRandom(), (ServerPlayerEntity) player.playerEntity);

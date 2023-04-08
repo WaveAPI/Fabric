@@ -125,7 +125,7 @@ public class WaveItem {
         return mod;
     }
 
-    public Item getItem() {
+    public Item _getItem() {
         return item;
     }
 
