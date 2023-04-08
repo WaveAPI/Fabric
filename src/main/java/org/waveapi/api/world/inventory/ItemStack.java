@@ -1,5 +1,8 @@
 package org.waveapi.api.world.inventory;
 
+import net.minecraft.server.network.ServerPlayerEntity;
+import org.waveapi.api.world.entity.living.EntityPlayer;
+
 public class ItemStack {
 
     public final net.minecraft.item.ItemStack itemStack;
@@ -15,6 +18,14 @@ public class ItemStack {
     }
     public void setAmount(int amount) {
         this.itemStack.setCount(amount);
+    }
+
+    public void damage(int amount, EntityPlayer player) {
+        if (player.playerEntity instanceof ServerPlayerEntity) {
+            boolean broken = itemStack.damage(amount, player.playerEntity.getRandom(), (ServerPlayerEntity) player.playerEntity);
+            if (broken)
+                itemStack.setCount(itemStack.getCount() - 1);
+        }
     }
 
 }
