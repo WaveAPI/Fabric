@@ -30,11 +30,12 @@ public interface ContainerTile {
 
             ItemStack slot = getStack(i).itemStack;
             if (slot == ItemStack.EMPTY || slot.isEmpty()) {
+                s.setCount(count);
                 setStack(i, new org.waveapi.api.world.inventory.ItemStack(s));
                 return s.getCount();
             }
             if (ItemUtils.canMergeItems(slot, s)) {
-                int amount = Math.max(count, slot.getMaxCount() - count);
+                int amount = Math.min(count, slot.getMaxCount() - slot.getCount());
                 slot.setCount(slot.getCount() + amount);
                 count -= amount;
             }
