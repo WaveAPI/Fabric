@@ -3,16 +3,14 @@
 	"id": "waveapi",
 	"version": "${version}",
 	"name": "WaveAPI",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"Me!"
-	],
+	"description": "WaveAPI Fabric implementation",
+	"authors": [],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://waveAPI.org/",
+		"sources": "https://github.com/WaveAPI"
 	},
-	"license": "CC0-1.0",
-	"icon": "missing_texture.png",
+	"license": "MIT",
+	"icon": "assets/waveapi/textures/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
