@@ -27,6 +27,8 @@ public class ItemStack {
         return itemStack.getItem() instanceof WaveItemBased wave ? wave.getWave() : ItemHelper.of(itemStack.getItem());
     }
 
+    public int getMaxAmount() {return itemStack.getMaxCount();}
+
     public boolean is(WaveItem item) {
         return itemStack.isOf(item._getItem());
     }

@@ -148,4 +148,6 @@ public class WaveItem {
         return new ArrayList<>();
     }
 
+    public int getMaxAmount() {return item.getMaxCount();}
+
 }
