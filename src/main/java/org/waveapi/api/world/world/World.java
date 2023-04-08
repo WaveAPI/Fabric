@@ -1,9 +1,12 @@
 package org.waveapi.api.world.world;
 
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
 import org.waveapi.api.math.BlockPos;
+import org.waveapi.api.math.Vector3;
 import org.waveapi.api.world.entity.EntityBase;
+import org.waveapi.api.world.inventory.ItemStack;
 import org.waveapi.content.items.blocks.WaveTileEntityBased;
 
 public class World {
@@ -41,6 +44,11 @@ public class World {
         }
 
         return null;
+    }
+
+    public void dropItem(Vector3 position, ItemStack stack) {
+        ItemEntity entity = new ItemEntity(world, position.getX(), position.getY(), position.getZ(), stack.itemStack);
+        world.spawnEntity(entity);
     }
 
     public void breakBlock(BlockPos pos, boolean shouldDrop) {
