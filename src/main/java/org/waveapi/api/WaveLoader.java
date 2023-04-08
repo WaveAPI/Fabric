@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -34,7 +35,12 @@ public class WaveLoader {
     public static void init() {
 
         File modFolder = new File("./mods");
-        File[] mods = modFolder.listFiles();
+        File modFolder2 = new File("./waveapi/mods");
+        List<File> mods = List.of(modFolder.listFiles());
+        File[] modFolder2Contents = modFolder2.listFiles();
+        if (modFolder2Contents != null) {
+            mods.addAll(List.of(modFolder2Contents));
+        }
 
         File modified = new File(Main.mainFolder, "modifCache.txt");
 
