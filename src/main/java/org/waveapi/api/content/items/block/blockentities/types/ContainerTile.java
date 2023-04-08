@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
+import org.waveapi.utils.ItemUtils;
 
 public interface ContainerTile {
 
@@ -17,6 +18,28 @@ public interface ContainerTile {
         }
         ((WaveTileEntity)this).markNeedsSaving();
         return new org.waveapi.api.world.inventory.ItemStack(getStack(slot).itemStack.split(amount));
+    }
+
+    default int giveItem(org.waveapi.api.world.inventory.ItemStack stack) {
+        ItemStack s = stack.itemStack;
+        int count = s.getCount();
+        for (int i = 0 ; i < getSize() ; i++) {
+            if (count == 0) {
+                return s.getCount();
+            }
+
+            ItemStack slot = getStack(i).itemStack;
+            if (slot == ItemStack.EMPTY || slot.isEmpty()) {
+                setStack(i, new org.waveapi.api.world.inventory.ItemStack(s));
+                return s.getCount();
+            }
+            if (ItemUtils.canMergeItems(slot, s)) {
+                int amount = Math.max(count, slot.getMaxCount() - count);
+                slot.setCount(slot.getCount() + amount);
+                count -= amount;
+            }
+        }
+        return s.getCount() - count;
     }
 
     default org.waveapi.api.world.inventory.ItemStack take(int slot) {
