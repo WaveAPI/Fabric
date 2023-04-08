@@ -10,8 +10,14 @@ import java.util.List;
 
 public class LimitedPerTick implements DeltaTicker {
 
-    private record tickWrap(DeltaTicking ticking, long lastTick) {
+    private class tickWrap {
+        private final DeltaTicking ticking;
+        private long lastTick;
 
+        public tickWrap(DeltaTicking ticking, long lastTick) {
+            this.ticking = ticking;
+            this.lastTick = lastTick;
+        }
     }
     private final List<tickWrap> ticking;
     private int i;
@@ -43,6 +49,7 @@ public class LimitedPerTick implements DeltaTicker {
                 ticking.remove(i);
             }
             deltaTicking.ticking.tick((int) (currentTick - deltaTicking.lastTick));
+            deltaTicking.lastTick = currentTick;
 
             i++;
         }
