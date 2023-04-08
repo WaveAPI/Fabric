@@ -43,4 +43,8 @@ public class World {
         return null;
     }
 
+    public void breakBlock(BlockPos pos, boolean shouldDrop) {
+        world.breakBlock(pos.pos, shouldDrop);
+    }
+
 }
