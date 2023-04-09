@@ -2,6 +2,7 @@ package org.waveapi.api.content.items.recipes;
 
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.WaveItem;
+import org.waveapi.api.content.tags.Tag;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,6 +89,12 @@ public class WaveShapedRecipe { //TODO: REWRITE and use ingredients, maybe do so
     public WaveShapedRecipe addIngredient(char symbol, String id) {
         if (!bake) return this;
         ingredients.put(symbol, "{\"item\": \"" + id + "\"}");
+        return this;
+    }
+
+    public WaveShapedRecipe addIngredient(char symbol, Tag tag) {
+        if (!bake) return this;
+        ingredients.put(symbol, tag.getTagIngredient());
         return this;
     }
 

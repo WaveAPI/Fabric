@@ -8,6 +8,7 @@ import net.minecraft.util.Identifier;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
+import org.waveapi.api.content.tags.Tag;
 import org.waveapi.api.misc.Side;
 import org.waveapi.api.misc.Text;
 import org.waveapi.api.world.entity.living.EntityPlayer;
@@ -40,7 +41,10 @@ public class WaveItem {
 
     protected String[] base;
 
-
+    public WaveItem tag(Tag tag) {
+        tag.tag(this);
+        return this;
+    }
 
     //<editor-fold desc="Item register code and constructors.">
     public static void register() {

@@ -2,6 +2,7 @@ package org.waveapi.api.world.inventory;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.waveapi.api.content.items.WaveItem;
+import org.waveapi.api.content.tags.Tag;
 import org.waveapi.api.world.entity.living.EntityPlayer;
 import org.waveapi.content.items.ItemHelper;
 import org.waveapi.content.items.WaveItemBased;
@@ -31,6 +32,10 @@ public class ItemStack {
 
     public boolean is(WaveItem item) {
         return itemStack.isOf(item._getItem());
+    }
+
+    public boolean isOfTag(Tag tag) {
+        return tag.check(this);
     }
 
     public void damage(int amount, EntityPlayer player) {
