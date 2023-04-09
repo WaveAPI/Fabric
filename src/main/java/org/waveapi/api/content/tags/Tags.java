@@ -29,6 +29,8 @@ public class Tags {
 
     public static final Tag COBBLESTONE = new SimpleCommonTag("minecraft", "stone_crafting_materials");
 
+    public static final Tag GEM = new SimpleCommonTag("c", "gems");
+
     //</editor-fold>
 
 
