@@ -53,6 +53,7 @@ public class WaveShapedRecipe { //TODO: REWRITE and use ingredients, maybe do so
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            id++;
         }
 
         toRegister = null;
