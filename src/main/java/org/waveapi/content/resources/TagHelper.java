@@ -18,7 +18,7 @@ public class TagHelper {
             tags = new HashMap<>();
         }
         Map<String, List<String>> modMap = tags.computeIfAbsent(mod, k -> new HashMap<>());
-        modMap.computeIfAbsent(tag, k -> new ArrayList<>() {{add(item);}});
+        modMap.computeIfAbsent(tag, k -> new ArrayList<>() {}).add(item);
     }
 
     public static void write() {
