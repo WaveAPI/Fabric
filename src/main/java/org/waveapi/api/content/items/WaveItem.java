@@ -1,5 +1,6 @@
 package org.waveapi.api.content.items;
 
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -36,10 +37,12 @@ public class WaveItem {
 
     protected static LinkedList<WaveItem> toRegister = new LinkedList<>();
     protected WaveTab tab;
-    public boolean superWrap;
 
     protected String[] base;
 
+
+
+    //<editor-fold desc="Item register code and constructors.">
     public static void register() {
         for (WaveItem item : toRegister) {
             try {
@@ -91,16 +94,45 @@ public class WaveItem {
         toRegister.add(this);
     }
 
-    public void setDurability(int durability) {
-        settings.maxDamage(durability);
-    }
-
     public WaveItem(Item item) {
         Identifier identifier = Registries.ITEM.getId(item);
         this.id = identifier.getPath();
         this.mod = null; // todo: change to actual mod
         this.item = item;
     }
+    //</editor-fold>
+
+    public void setDurability(int durability) {
+        settings.maxDamage(durability);
+    }
+
+    //<editor-fold desc="Code needed for food to work">
+    public WaveItem makeFood(int hunger, float saturation) {
+        return this.makeFood(hunger, saturation, false, false, false);
+    }
+    public WaveItem makeFood(int hunger, float saturation, boolean isAlwaysEdible) {
+        return this.makeFood(hunger, saturation, isAlwaysEdible, false, false);
+    }
+
+
+        public WaveItem makeFood(int hunger, float saturation, boolean isAlwaysEdible, boolean isMeat, boolean isASnack) {
+        FoodComponent.Builder builder = new FoodComponent.Builder().hunger(hunger).saturationModifier(saturation);
+
+        if (isAlwaysEdible) {
+            builder.alwaysEdible();
+        }
+        if (isMeat) {
+            builder.meat();
+        }
+        if (isASnack) {
+            builder.snack();
+        }
+
+
+        settings.food(builder.build());
+        return this;
+    }
+    //</editor-fold>
 
     public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand, EntityPlayer player, World world) {
         return null;
