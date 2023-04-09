@@ -112,7 +112,7 @@ public class WaveBlock extends WaveItem {
                                 (pos, state) -> {
                                     try {
                                         TileEntityCreation creation = new TileEntityCreation(tile, pos, state, (BlockEntityType) type.get(block));
-                                        return ((TileEntityBlock) block).getTileEntity().getConstructor(TileEntityCreation.class).newInstance (creation).blockEntity;
+                                        return ((TileEntityBlock) this).getTileEntity().getConstructor(TileEntityCreation.class).newInstance (creation).blockEntity;
                                     } catch (IllegalAccessException | InvocationTargetException |
                                              InstantiationException | NoSuchMethodException e) {
                                         throw new RuntimeException(e);
