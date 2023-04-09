@@ -69,4 +69,9 @@ public class Vector3 {
         return new Vector3(v.rotateZ(angle));
     }
 
+
+    public Vector3 multiply(Vector3 vector) {return new Vector3(v.multiply(vector.v));}
+
+    public Vector3 multiply(double x, double y, double z) {return new Vector3(v.multiply(x, y, z));}
+
 }
