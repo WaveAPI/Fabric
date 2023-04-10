@@ -33,6 +33,14 @@ public class ClassHelper {
     public static <T> Class<?> LoadOrGenerateCompoundClass(String name, Generator generator, boolean generate) {
         if (generate) {
             ClassPool pool = ClassPool.getDefault();
+            CtClass check = pool.getOrNull(name);
+            if (check != null && check.isFrozen()) {
+                try {
+                    return Class.forName(name);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             CtClass ctClass = pool.makeClass(name);
             ctClass.defrost();
             try {

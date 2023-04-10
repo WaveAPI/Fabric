@@ -22,9 +22,7 @@ import org.waveapi.content.resources.ResourcePackManager;
 import org.waveapi.utils.ClassHelper;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.waveapi.Main.bake;
 
@@ -35,8 +33,6 @@ public class WaveItem {
     protected Item item;
 
     public Item.Settings settings;
-
-    protected static LinkedList<WaveItem> toRegister = new LinkedList<>();
     protected WaveTab tab;
 
     protected String[] base;
@@ -47,14 +43,22 @@ public class WaveItem {
     }
 
     //<editor-fold desc="Item register code and constructors.">
+    protected static LinkedList<WaveItem> toRegister = new LinkedList<>();
+
     public static void register() {
+        Set<String> registered = new HashSet<>(toRegister.size());
         for (WaveItem item : toRegister) {
+            if (registered.contains(item.id)) {
+                throw new RuntimeException("Mod [" + item.mod.name + "] tried to register [" + item.id + "] twice.");
+            }
             try {
                 item._registerLocal();
+                registered.add(item.id);
             } catch (Exception e) {
                 throw new RuntimeException("Caused by " + item.mod.name, e);
             }
         }
+        registered = null;
         toRegister = null;
     }
 

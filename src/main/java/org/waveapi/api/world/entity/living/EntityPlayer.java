@@ -18,6 +18,13 @@ public class EntityPlayer extends EntityLiving {
         playerEntity.sendMessage(Text.of(message), false);
     }
 
+    public void sendMessage(org.waveapi.api.misc.Text message) {
+        playerEntity.sendMessage(message.text, false);
+    }
+
+    public void sendActionBar(org.waveapi.api.misc.Text message) {
+        playerEntity.sendMessage(message.text, true);
+    }
     public void sendActionBar(String message) {
         playerEntity.sendMessage(Text.of(message), true);
     }
