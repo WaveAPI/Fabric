@@ -141,6 +141,12 @@ public class WaveItem {
     }
     //</editor-fold>
 
+
+    public WaveItem setRarity(Rarity rarity) {
+        settings.rarity(rarity.rar);
+        return this;
+    }
+
     public ItemUseResult onUse(org.waveapi.api.world.inventory.ItemStack item, UseHand hand, EntityPlayer player, World world) {
         return null;
     }
