@@ -58,7 +58,6 @@ public class WaveItem {
                 throw new RuntimeException("Caused by " + item.mod.name, e);
             }
         }
-        registered = null;
         toRegister = null;
     }
 
