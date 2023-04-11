@@ -22,17 +22,18 @@ public interface ContainerTile {
 
     default int giveItem(org.waveapi.api.world.inventory.ItemStack stack) {
         ItemStack s = stack.itemStack;
+        int original_count = s.getCount();
         int count = s.getCount();
         for (int i = 0 ; i < getSize() ; i++) {
             if (count == 0) {
-                return s.getCount();
+                return original_count;
             }
 
             ItemStack slot = getStack(i).itemStack;
             if (slot == ItemStack.EMPTY || slot.isEmpty()) {
                 s.setCount(count);
                 setStack(i, new org.waveapi.api.world.inventory.ItemStack(s));
-                return s.getCount();
+                return original_count;
             }
             if (ItemUtils.canMergeItems(slot, s)) {
                 int amount = Math.min(count, slot.getMaxCount() - slot.getCount());
@@ -40,7 +41,7 @@ public interface ContainerTile {
                 count -= amount;
             }
         }
-        return s.getCount() - count;
+        return original_count - count;
     }
 
     default org.waveapi.api.world.inventory.ItemStack take(int slot) {
