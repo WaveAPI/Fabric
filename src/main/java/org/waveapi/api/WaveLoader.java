@@ -36,7 +36,7 @@ public class WaveLoader {
 
         File modFolder = new File("./mods");
         File modFolder2 = new File("./waveapi/mods");
-        List<File> mods = List.of(modFolder.listFiles());
+        List<File> mods = new java.util.ArrayList<>(List.of(modFolder.listFiles()));
         File[] modFolder2Contents = modFolder2.listFiles();
         if (modFolder2Contents != null) {
             mods.addAll(List.of(modFolder2Contents));
