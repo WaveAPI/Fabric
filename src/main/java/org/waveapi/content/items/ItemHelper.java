@@ -11,4 +11,8 @@ public class ItemHelper {
     public static WaveItem of(Item item) {
         return items.computeIfAbsent(item, WaveItem::new);
     }
+
+    public static WaveItem of(String item) {
+        return null;
+    }
 }

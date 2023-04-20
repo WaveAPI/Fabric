@@ -6,15 +6,18 @@ import net.minecraft.text.Text;
 import java.util.function.Consumer;
 
 public class ResourceProvider implements ResourcePackProvider {
-
     @Override
-    public void register(Consumer<ResourcePackProfile> profileAdder) {
-        profileAdder.accept(ResourcePackProfile.create("waveapi",
-                Text.of("WaveAPI resources"),
+    public void register(Consumer<ResourcePackProfile> profileAdder, ResourcePackProfile.Factory factory) {
+        ResourcePackProfile p = new ResourcePackProfile("waveapi",
                 true,
-                (f) -> new DirectoryResourcePack("WaveAPI", ResourcePackManager.getInstance().getPackDir().toPath(), true),
-                ResourceType.CLIENT_RESOURCES,
+                () -> new DirectoryResourcePack(ResourcePackManager.getInstance().getPackDir()),
+                Text.of("WaveAPI resources"),
+                Text.of("Resources for WaveAPI mods"),
+                ResourcePackCompatibility.COMPATIBLE,
                 ResourcePackProfile.InsertionPosition.BOTTOM,
-                ResourcePackSource.BUILTIN));
+                true,
+                ResourcePackSource.PACK_SOURCE_BUILTIN);
+
+                profileAdder.accept(p);
     }
 }

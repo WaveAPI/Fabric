@@ -1,6 +1,6 @@
 package org.waveapi.api.content.items;
 
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -27,12 +27,7 @@ public class WaveTab {
     public WaveTab(String id, WaveItem item, WaveMod mod) {
         this.mod = mod;
         this.id = id;
-        group = FabricItemGroup.builder(new Identifier(mod.name, id)).icon(() -> new ItemStack(item._getItem())).entries(new ItemGroup.EntryCollector() {
-            @Override
-            public void accept(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries) {
-                entries.addAll(items);
-            }
-        }).build();
+        group = FabricItemGroupBuilder.build(new Identifier(mod.name, id), () -> new ItemStack(item._getItem()));
     }
 
     public WaveTab(String id, ItemModel model, WaveMod mod) {

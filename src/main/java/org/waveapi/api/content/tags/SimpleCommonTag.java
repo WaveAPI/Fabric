@@ -1,9 +1,10 @@
 package org.waveapi.api.content.tags;
 
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import org.waveapi.api.content.items.WaveItem;
 import org.waveapi.api.world.inventory.ItemStack;
 import org.waveapi.content.resources.TagHelper;
@@ -18,7 +19,7 @@ public class SimpleCommonTag implements Tag {
     public SimpleCommonTag(String mod, String location) {
         this.mod = mod;
         this.id = location;
-        this.ingredient = Ingredient.fromTag(TagKey.of(RegistryKeys.ITEM,  new Identifier(mod, id)));
+        this.ingredient = Ingredient.fromTag(TagKey.of(RegistryKey.ofRegistry(Registry.ITEM.getDefaultId()),  new Identifier(mod, id)));
     }
 
     @Override

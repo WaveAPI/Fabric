@@ -86,7 +86,7 @@ public class EntityBase {
     }
     public boolean damage(DamageSource source, float amount) {
         superWrap = true;
-        return entity.damage(source.getSource(getWorld().world), amount);
+        return entity.damage(source.source, amount);
     }
 
     public org.waveapi.api.world.world.World getWorld() {

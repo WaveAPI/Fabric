@@ -6,9 +6,8 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.WaveItem;
@@ -87,7 +86,7 @@ public class WaveBlock extends WaveItem {
                  NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
-        block = Registry.register(Registries.BLOCK, new Identifier(mod.name, id), bl);
+        block = Registry.register(Registry.BLOCK, new Identifier(mod.name, id), bl);
         if (this instanceof TileEntityBlock) {
             try {
                 Field type = block.getClass().getField("tileType");
@@ -107,7 +106,7 @@ public class WaveBlock extends WaveItem {
                         , Main.bake);
                 entityType.set(block, tile);
 
-                BlockEntityType<BlockEntity> entity = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(mod.name, id + "_tile"),
+                BlockEntityType<BlockEntity> entity = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(mod.name, id + "_tile"),
                         FabricBlockEntityTypeBuilder.create(
                                 (pos, state) -> {
                                     try {
@@ -141,7 +140,7 @@ public class WaveBlock extends WaveItem {
     }
 
     public WaveBlock setTab(WaveTab tab) {
-        this.tab = tab;
+        settings.group(tab.group);
         return this;
     }
 

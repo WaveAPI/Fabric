@@ -7,9 +7,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.entities.renderer.WaveEntityRenderer;
@@ -41,7 +40,7 @@ public class WaveEntityType<T extends EntityBase> {
     public static void register() {
         for (WaveEntityType<?> t : toRegister) {
             t.entityType = Registry.register(
-                    Registries.ENTITY_TYPE,
+                    Registry.ENTITY_TYPE,
                     new Identifier(t.mod.name, t.id),
                     t.preregister.build()
             );

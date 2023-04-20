@@ -2,9 +2,8 @@ package org.waveapi.api.content.items;
 
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.content.items.models.ItemModel;
@@ -79,7 +78,7 @@ public class WaveItem {
             throw new RuntimeException(e);
         }
 
-        this.item = Registry.register(Registries.ITEM, new Identifier(mod.name, id), item);
+        this.item = Registry.register(Registry.ITEM, new Identifier(mod.name, id), item);
         if (tab != null) {
             tab.items.add(item.getDefaultStack());
         }
@@ -102,7 +101,7 @@ public class WaveItem {
     }
 
     public WaveItem(Item item) {
-        Identifier identifier = Registries.ITEM.getId(item);
+        Identifier identifier = Registry.ITEM.getId(item);
         this.id = identifier.getPath();
         this.mod = null; // todo: change to actual mod
         this.item = item;
@@ -163,7 +162,7 @@ public class WaveItem {
     }
 
     public WaveItem setTab(WaveTab tab) {
-        this.tab = tab;
+        settings.group(tab.group);
         return this;
     }
 

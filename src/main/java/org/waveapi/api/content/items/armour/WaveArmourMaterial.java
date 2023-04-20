@@ -1,6 +1,6 @@
 package org.waveapi.api.content.items.armour;
 
-import net.minecraft.item.ArmorItem;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -36,13 +36,13 @@ public class WaveArmourMaterial {
                     "models/armor/" + mod.name + "_" + name + "_wave_layer_2");
             mat = new ArmorMaterial() {
                 @Override
-                public int getDurability(ArmorItem.Type type) {
-                    return baseDurability * durability[type.getEquipmentSlot().getEntitySlotId()];
+                public int getDurability(EquipmentSlot slot) {
+                    return baseDurability * durability[slot.getEntitySlotId()];
                 }
 
                 @Override
-                public int getProtection(ArmorItem.Type type) {
-                    return protection[type.getEquipmentSlot().getEntitySlotId()];
+                public int getProtectionAmount(EquipmentSlot slot) {
+                    return protection[slot.getEntitySlotId()];
                 }
 
                 @Override

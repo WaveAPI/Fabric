@@ -1,16 +1,16 @@
 package org.waveapi.api.content.items.armour;
 
-import net.minecraft.item.ArmorItem;
+import net.minecraft.entity.EquipmentSlot;
 
 public enum ArmourSlot {
-    HELMET(ArmorItem.Type.HELMET),
-    CHESTPLATE(ArmorItem.Type.CHESTPLATE),
-    LEGGINGS(ArmorItem.Type.LEGGINGS),
-    BOOTS(ArmorItem.Type.BOOTS);
+    HELMET(EquipmentSlot.HEAD),
+    CHESTPLATE(EquipmentSlot.CHEST),
+    LEGGINGS(EquipmentSlot.LEGS),
+    BOOTS(EquipmentSlot.FEET);
 
-    ArmourSlot(ArmorItem.Type vanilla) {
+    ArmourSlot(EquipmentSlot vanilla) {
         this.vanilla = vanilla;
     }
 
-    public ArmorItem.Type vanilla;
+    public EquipmentSlot vanilla;
 }
