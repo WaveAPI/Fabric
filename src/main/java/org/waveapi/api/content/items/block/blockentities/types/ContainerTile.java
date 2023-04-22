@@ -12,6 +12,29 @@ public interface ContainerTile {
     org.waveapi.api.world.inventory.ItemStack getStack(int slot);
     void setStack(int slot, org.waveapi.api.world.inventory.ItemStack stack);
 
+    default boolean isItemAllowedInSlot(int slot, org.waveapi.api.world.inventory.ItemStack stack) {
+        return true;
+    }
+
+    default int giveItem(int slot, org.waveapi.api.world.inventory.ItemStack stack) {
+        ItemStack s = stack.itemStack;
+        int original_count = s.getCount();
+        int count = s.getCount();
+
+        ItemStack sl = getStack(slot).itemStack;
+        if (sl == ItemStack.EMPTY || sl.isEmpty()) {
+            s.setCount(count);
+            setStack(slot, new org.waveapi.api.world.inventory.ItemStack(s));
+            return original_count;
+        }
+        if (ItemUtils.canMergeItems(sl, s)) {
+            int amount = Math.min(count, sl.getMaxCount() - sl.getCount());
+            sl.setCount(sl.getCount() + amount);
+            count -= amount;
+        }
+        return original_count - count;
+    }
+
     default org.waveapi.api.world.inventory.ItemStack take(int slot, int amount) {
         if (slot < 0 || slot >= getSize() || getStack(slot).itemStack.isEmpty() || amount <= 0) {
             return new org.waveapi.api.world.inventory.ItemStack(ItemStack.EMPTY);
@@ -27,6 +50,9 @@ public interface ContainerTile {
         for (int i = 0 ; i < getSize() ; i++) {
             if (count == 0) {
                 return original_count;
+            }
+            if (!isItemAllowedInSlot(i, stack)) {
+                continue;
             }
 
             ItemStack slot = getStack(i).itemStack;
@@ -103,6 +129,11 @@ public interface ContainerTile {
     static ContainerTile of(Object o) {
         if (o instanceof Inventory inventory) {
             return new ContainerTile() {
+
+                @Override
+                public boolean isItemAllowedInSlot(int slot, org.waveapi.api.world.inventory.ItemStack stack) {
+                    return inventory.isValid(slot, stack.itemStack);
+                }
 
                 @Override
                 public org.waveapi.api.world.inventory.ItemStack take(int slot, int amount) {
