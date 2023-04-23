@@ -9,10 +9,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.waveapi.api.content.items.WaveItem;
-import org.waveapi.api.world.entity.living.EntityPlayer;
-import org.waveapi.api.world.inventory.ItemUseResult;
-import org.waveapi.api.world.inventory.UseHand;
+import org.waveapi.api.entities.entity.living.EntityPlayer;
+import org.waveapi.api.items.ItemUseResult;
+import org.waveapi.api.items.UseHand;
+import org.waveapi.api.items.WaveItem;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class CustomItemWrap extends Item implements WaveItemBased {
             useHand = UseHand.OFF_HAND;
         }
 
-        ItemUseResult result = this.item.onUse(new org.waveapi.api.world.inventory.ItemStack(item), useHand, new EntityPlayer(user), new org.waveapi.api.world.world.World(world));
+        ItemUseResult result = this.item.onUse(new org.waveapi.api.items.inventory.ItemStack(item), useHand, new EntityPlayer(user), new org.waveapi.api.world.World(world));
 
         if (result != null) {
             return ItemUseResult.to(item, result);
@@ -47,7 +47,7 @@ public class CustomItemWrap extends Item implements WaveItemBased {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        for (org.waveapi.api.misc.Text t : item.addToolTip(new org.waveapi.api.world.inventory.ItemStack(stack))) {
+        for (org.waveapi.api.misc.Text t : item.addToolTip(new org.waveapi.api.items.inventory.ItemStack(stack))) {
             tooltip.add(t.text);
         }
         super.appendTooltip(stack, world, tooltip, context);

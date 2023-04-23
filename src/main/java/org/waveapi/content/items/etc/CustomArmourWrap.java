@@ -1,8 +1,8 @@
 package org.waveapi.content.items.etc;
 
 import net.minecraft.item.ArmorItem;
-import org.waveapi.api.content.items.WaveItem;
-import org.waveapi.api.content.items.armour.WaveArmourItem;
+import org.waveapi.api.items.WaveItem;
+import org.waveapi.api.items.armour.WaveArmourItem;
 
 
 public class CustomArmourWrap extends ArmorItem {

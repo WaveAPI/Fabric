@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Arm;
 import net.minecraft.world.World;
-import org.waveapi.api.world.entity.EntityBase;
+import org.waveapi.api.entities.entity.EntityBase;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class EntityLivingWrap extends LivingEntity {
             entity.superWrap = false;
             return super.damage(source, amount);
         } else {
-            return entity.damage(new org.waveapi.api.world.entity.DamageSource(source), amount);
+            return entity.damage(new org.waveapi.api.entities.DamageSource(source), amount);
         }
     }
 
