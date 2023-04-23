@@ -7,7 +7,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.world.World;
-import org.waveapi.api.world.entity.EntityBase;
+import org.waveapi.api.entities.entity.EntityBase;
 
 public class EntityWrap extends Entity {
 
@@ -39,7 +39,7 @@ public class EntityWrap extends Entity {
             entity.superWrap = false;
             return super.damage(source, amount);
         } else {
-            return entity.damage(new org.waveapi.api.world.entity.DamageSource(source), amount);
+            return entity.damage(new org.waveapi.api.entities.DamageSource(source), amount);
         }
     }
 

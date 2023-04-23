@@ -1,6 +1,6 @@
 package org.waveapi.ticker;
 
-import org.waveapi.api.content.items.block.blockentities.DeltaTicking;
+import org.waveapi.api.items.block.blockentities.DeltaTicking;
 
 public interface DeltaTicker {
     void addTicking(DeltaTicking ticking);

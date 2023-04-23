@@ -6,8 +6,8 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.waveapi.api.content.items.block.blockentities.DeltaTicking;
-import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
+import org.waveapi.api.items.block.blockentities.DeltaTicking;
+import org.waveapi.api.items.block.blockentities.WaveTileEntity;
 import org.waveapi.api.misc.NBT;
 import org.waveapi.ticker.DeltaTicker;
 
