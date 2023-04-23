@@ -1,7 +1,7 @@
 package org.waveapi.ticker.tickers;
 
-import org.waveapi.api.content.items.block.blockentities.DeltaTicking;
-import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
+import org.waveapi.api.items.block.blockentities.DeltaTicking;
+import org.waveapi.api.items.block.blockentities.WaveTileEntity;
 import org.waveapi.ticker.DeltaTickManager;
 import org.waveapi.ticker.DeltaTicker;
 

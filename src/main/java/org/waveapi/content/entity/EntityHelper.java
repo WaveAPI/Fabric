@@ -3,10 +3,10 @@ package org.waveapi.content.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import org.waveapi.api.world.entity.EntityBase;
-import org.waveapi.api.world.entity.interfaces.FlyingItemBasedEntity;
-import org.waveapi.api.world.entity.living.EntityLiving;
-import org.waveapi.api.world.entity.living.EntityPlayer;
+import org.waveapi.api.entities.entity.EntityBase;
+import org.waveapi.api.entities.entity.interfaces.FlyingItemBasedEntity;
+import org.waveapi.api.entities.entity.living.EntityLiving;
+import org.waveapi.api.entities.entity.living.EntityPlayer;
 import org.waveapi.content.entity.wraps.EntityWrap;
 import org.waveapi.content.entity.wraps.living.EntityLivingWrap;
 

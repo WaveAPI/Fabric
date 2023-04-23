@@ -1,7 +1,7 @@
 package org.waveapi.content.items;
 
 import net.minecraft.item.Item;
-import org.waveapi.api.content.items.WaveItem;
+import org.waveapi.api.items.WaveItem;
 
 import java.util.HashMap;
 import java.util.Map;

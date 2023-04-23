@@ -1,10 +1,10 @@
 package org.waveapi.content.items.blocks;
 
 import net.minecraft.block.Block;
-import org.waveapi.api.content.items.block.WaveBlock;
-import org.waveapi.api.content.items.block.blockentities.TileEntityBlock;
-import org.waveapi.api.content.items.block.blockentities.WaveTileEntity;
-import org.waveapi.api.content.items.block.blockentities.types.ContainerTile;
+import org.waveapi.api.items.block.WaveBlock;
+import org.waveapi.api.items.block.blockentities.TileEntityBlock;
+import org.waveapi.api.items.block.blockentities.WaveTileEntity;
+import org.waveapi.api.items.block.blockentities.types.ContainerTile;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
