@@ -3,6 +3,7 @@ package org.waveapi.api;
 import net.fabricmc.loader.api.FabricLoader;
 import org.waveapi.Main;
 import org.waveapi.utils.ByteUtils;
+import org.waveapi.utils.ClassHelper;
 import org.waveapi.utils.Yaml;
 
 import java.io.File;
@@ -54,6 +55,7 @@ public class WaveLoader {
                     FileInputStream in = new FileInputStream(modified);
 
                     if (!version.equals(ByteUtils.readString(in))) {
+                        ClassHelper.rebuild = true;
                         break modifiedCheck;
                     }
 

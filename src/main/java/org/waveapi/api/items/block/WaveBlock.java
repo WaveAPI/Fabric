@@ -9,7 +9,6 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.entities.entity.living.EntityPlayer;
 import org.waveapi.api.items.ItemUseResult;
@@ -70,7 +69,7 @@ public class WaveBlock extends WaveItem {
     public void _registerLocal() {
         Block bl;
         try {
-            bl = (Block) ClassHelper.LoadOrGenerateCompoundClass(getClass().getName() + "$mcBlock",
+            bl = (Block) ClassHelper.LoadOrGenerateCompoundClass(
                     new ClassHelper.Generator() {
                         @Override
                         public String[] getBaseMethods() {
@@ -81,8 +80,7 @@ public class WaveBlock extends WaveItem {
                         public List<String> getInterfaces() {
                             return BlockHelper.searchUp(WaveBlock.this.getClass());
                         }
-                    }
-                    , Main.bake).getConstructor(AbstractBlock.Settings.class, WaveBlock.class).newInstance(blockSettings, this);
+                    }).getConstructor(AbstractBlock.Settings.class, WaveBlock.class).newInstance(blockSettings, this);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                  NoSuchMethodException e) {
             throw new RuntimeException(e);
@@ -92,7 +90,7 @@ public class WaveBlock extends WaveItem {
             try {
                 Field type = block.getClass().getField("tileType");
                 Field entityType = block.getClass().getField("entityType");
-                final Class<? extends BlockEntity> tile = (Class<? extends BlockEntity>) ClassHelper.LoadOrGenerateCompoundClass(block.getClass().getName() + "$mcTile",
+                final Class<? extends BlockEntity> tile = (Class<? extends BlockEntity>) ClassHelper.LoadOrGenerateCompoundClass(
                         new ClassHelper.Generator() {
                             @Override
                             public String[] getBaseMethods() {
@@ -103,8 +101,7 @@ public class WaveBlock extends WaveItem {
                             public List<String> getInterfaces() {
                                 return BlockHelper.searchUpTile(((TileEntityBlock) WaveBlock.this).getTileEntity());
                             }
-                        }
-                        , Main.bake);
+                        });
                 entityType.set(block, tile);
 
                 BlockEntityType<BlockEntity> entity = Registry.register(Registries.BLOCK_ENTITY_TYPE, new Identifier(mod.name, id + "_tile"),

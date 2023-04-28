@@ -10,7 +10,6 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.entities.entity.EntityBase;
 import org.waveapi.api.entities.entity.living.EntityLiving;
@@ -75,7 +74,7 @@ public class WaveEntityType<T extends EntityBase> {
 
         this.preregister = FabricEntityTypeBuilder.create(type.to()).entityFactory((type, world) -> EntityCreation.create(this, world).entity).dimensions(box.getDimensions());
 
-        entityClass = (Class<Entity>) ClassHelper.LoadOrGenerateCompoundClass(entity.getTypeName() + "$mcEntity", new ClassHelper.Generator() {
+        entityClass = (Class<Entity>) ClassHelper.LoadOrGenerateCompoundClass(new ClassHelper.Generator() {
             @Override
             public String[] getBaseMethods() {
                 return EntityHelper.searchUpBase(entity);
@@ -85,7 +84,7 @@ public class WaveEntityType<T extends EntityBase> {
             public List<String> getInterfaces() {
                 return EntityHelper.searchUp(entity);
             }
-        }, Main.bake);
+        });
 
         toRegister.add(this);
     }

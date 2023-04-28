@@ -8,15 +8,21 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ClassHelper {
 
     public static ClassLoader loader;
 
+    private static final File loaderBase = new File("./waveAPI/classes");
+    public static boolean rebuild;
+    private static final Map<String, Class<?>> cache = new HashMap();
+
     static {
         try {
-            loader = new URLClassLoader(new URL[]{new File("./waveAPI/classes").toURI().toURL()}, ClassHelper.class.getClassLoader());
+            loader = new URLClassLoader(new URL[]{loaderBase.toURI().toURL()}, ClassHelper.class.getClassLoader());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -28,23 +34,54 @@ public class ClassHelper {
             return new String[] {};
         }
         List<String> getInterfaces();
+
+        default String getName() {
+            return null;
+        }
     }
 
-    public static <T> Class<?> LoadOrGenerateCompoundClass(String name, Generator generator, boolean generate) {
-        if (generate) {
-            ClassPool pool = ClassPool.getDefault();
-            CtClass check = pool.getOrNull(name);
-            if (check != null && check.isFrozen()) {
-                try {
-                    return Class.forName(name);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+    public static <T> Class<?> LoadOrGenerateCompoundClass(Generator generator) {
+        String[] base = null;
+        List<String> interfaces = null;
+        String name = generator.getName();
+        if (name == null) {
+            base = generator.getBaseMethods();
+            interfaces = generator.getInterfaces();
+
+            StringBuilder builder = new StringBuilder("wave");
+
+            for (String b : base) {
+                builder.append(".").append(b.replaceAll("\\.", ""));
             }
+
+            for (String i : interfaces) {
+                builder.append(".").append(i.replaceAll("\\.", ""));
+            }
+            name = builder.toString();
+        }
+
+
+        Class<?> cached = cache.get(name);
+        if (cached != null) {
+            return cached;
+        }
+
+        if (!rebuild && new File(loaderBase, name.replaceAll("\\.", "/")).exists()) {
+            try {
+                return loader.loadClass(name);
+            } catch (ClassNotFoundException | ClassCastException e) {
+                return LoadOrGenerateCompoundClass(generator);
+            }
+        } else {
+            if (base == null) {
+                base = generator.getBaseMethods();
+                interfaces = generator.getInterfaces();
+            }
+
+            ClassPool pool = ClassPool.getDefault();
             CtClass ctClass = pool.makeClass(name);
             ctClass.defrost();
             try {
-                String[] base = generator.getBaseMethods();
                 CtClass baseClass = pool.getCtClass(base[0]);
                 ctClass.setSuperclass(baseClass.getSuperclass());
 
@@ -82,7 +119,7 @@ public class ClassHelper {
                     }
                 }
 
-                for (String impl : generator.getInterfaces()) {
+                for (String impl : interfaces) {
                     CtClass cls = pool.getCtClass(impl);
                     for (CtClass interfce : cls.getInterfaces()) {
                         ctClass.addInterface(interfce);
@@ -100,14 +137,13 @@ public class ClassHelper {
                 }
 
                 ctClass.writeFile("./waveAPI/classes");
-            } catch (CannotCompileException | NotFoundException | IOException e) {
+
+                Class<?> toCached = loader.loadClass(name);
+                cache.put(name, toCached);
+                return toCached;
+            } catch (CannotCompileException | NotFoundException | IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-        }
-        try {
-            return loader.loadClass(name);
-        } catch (ClassNotFoundException | ClassCastException e) {
-            return LoadOrGenerateCompoundClass(name, generator, true);
         }
     }
 
