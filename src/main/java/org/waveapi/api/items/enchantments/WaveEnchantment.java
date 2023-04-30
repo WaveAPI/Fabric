@@ -53,7 +53,7 @@ public class WaveEnchantment {
         return this;
     }
 
-    public void onUsedToAttack(EntityLiving attacker, EntityBase attacked, int level) {
+    public void onAttack(EntityLiving attacker, EntityBase attacked, int level) {
 
     }
 
