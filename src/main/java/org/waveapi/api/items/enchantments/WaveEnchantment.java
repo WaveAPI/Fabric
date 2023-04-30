@@ -10,6 +10,7 @@ import org.waveapi.api.entities.entity.living.EntityLiving;
 import org.waveapi.api.items.ItemAccepter;
 import org.waveapi.api.items.Rarity;
 import org.waveapi.api.items.enchantments._wrap.EnchantmentWrapper;
+import org.waveapi.content.resources.LangManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,11 @@ public class WaveEnchantment {
 
     public void onAttack(EntityLiving attacker, EntityBase attacked, int level) {
 
+    }
+
+    public WaveEnchantment addTranslation(String language, String name) {
+        LangManager.addTranslation(mod.name, language,  "enchantment." + mod.name + "." + this.name, name);
+        return this;
     }
 
     public WaveEnchantment makeTreasure() {
