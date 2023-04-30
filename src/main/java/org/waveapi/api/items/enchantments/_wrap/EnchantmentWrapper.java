@@ -8,7 +8,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import org.waveapi.api.entities.entity.EntityBase;
 import org.waveapi.api.entities.entity.living.EntityLiving;
-import org.waveapi.api.items.ItemAccepter;
 import org.waveapi.api.items.enchantments.WaveEnchantment;
 
 import java.util.EnumMap;
@@ -20,8 +19,30 @@ public class EnchantmentWrapper extends Enchantment {
     private final WaveEnchantment wave;
 
     public EnchantmentWrapper(WaveEnchantment enchantment) {
-        super(enchantment.rarity.enchRar, null, null);
+        super(enchantment.rarity.enchRar,
+                enchantment.target._mc,
+                null);
         this.wave = enchantment;
+    }
+
+    @Override
+    public boolean isTreasure() {
+        return wave.isTreasure;
+    }
+
+    @Override
+    public boolean isCursed() {
+        return wave.isCursed;
+    }
+
+    @Override
+    public boolean isAvailableForEnchantedBookOffer() {
+        return wave.villagerTrade;
+    }
+
+    @Override
+    public boolean isAvailableForRandomSelection() {
+        return wave.enchTable;
     }
 
     @Override
@@ -42,15 +63,5 @@ public class EnchantmentWrapper extends Enchantment {
     @Override
     public int getMaxLevel() {
         return wave.getMaxLevel();
-    }
-
-    @Override
-    public boolean isAcceptableItem(ItemStack stack) {
-        for (ItemAccepter accepter : wave.accepters) {
-            if (accepter._isValidItem(stack.getItem())) {
-                return true;
-            }
-        }
-        return false;
     }
 }
