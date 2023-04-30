@@ -26,7 +26,7 @@ public class EnchantmentWrapper extends Enchantment {
 
     @Override
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
-        wave.onUsedToAttack(new EntityLiving(user), new EntityBase(target), level);
+        wave.onAttack(new EntityLiving(user), new EntityBase(target), level);
     }
 
     public Map<EquipmentSlot, ItemStack> getEquipment(LivingEntity entity) {
