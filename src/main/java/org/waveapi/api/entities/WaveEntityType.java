@@ -12,10 +12,10 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.entities.entity.EntityBase;
+import org.waveapi.api.entities.entity._mc.EntityHelper;
 import org.waveapi.api.entities.entity.living.EntityLiving;
 import org.waveapi.api.entities.renderer.WaveEntityRenderer;
 import org.waveapi.api.misc.Side;
-import org.waveapi.content.entity.EntityHelper;
 import org.waveapi.utils.ClassHelper;
 
 import java.util.LinkedList;

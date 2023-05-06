@@ -1,14 +1,10 @@
-package org.waveapi.content.entity;
+package org.waveapi.api.entities.entity._mc;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import org.waveapi.api.entities.entity.EntityBase;
+import org.waveapi.api.entities.entity._mc.wraps.EntityWrap;
+import org.waveapi.api.entities.entity._mc.wraps.living.EntityLivingWrap;
 import org.waveapi.api.entities.entity.interfaces.FlyingItemBasedEntity;
 import org.waveapi.api.entities.entity.living.EntityLiving;
-import org.waveapi.api.entities.entity.living.EntityPlayer;
-import org.waveapi.content.entity.wraps.EntityWrap;
-import org.waveapi.content.entity.wraps.living.EntityLivingWrap;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -18,15 +14,7 @@ import java.util.Map;
 
 public class EntityHelper {
 
-    public static EntityBase wrap(Entity entity) {
-        if (entity instanceof LivingEntity) {
-            if (entity instanceof PlayerEntity) {
-                return new EntityPlayer((PlayerEntity) entity);
-            }
-            return new EntityLiving((LivingEntity) entity);
-        }
-        return new EntityBase(entity);
-    }
+
 
     public static Map<String, String> entityPossibleInterfaces;
 

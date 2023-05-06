@@ -37,4 +37,15 @@ public class EntityPlayer extends EntityLiving {
         return new Vector3(playerEntity.getRotationVector());
     }
 
+    public static EntityPlayer of(Object obj) {
+        if (obj instanceof PlayerEntity e) {
+            return new EntityPlayer(e);
+        }
+        return null;
+    }
+
+    public float getCoolDownProgress() {
+        return playerEntity.getAttackCooldownProgress(0.5f);
+    }
+
 }

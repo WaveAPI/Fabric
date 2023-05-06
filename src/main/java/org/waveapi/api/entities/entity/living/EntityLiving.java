@@ -39,4 +39,11 @@ public class EntityLiving extends EntityBase {
     public float getMaxHealth() {
         return ((LivingEntity)entity).getMaxHealth();
     }
+
+    public static EntityLiving of(Object obj) {
+        if (obj instanceof LivingEntity e) {
+            return new EntityLiving(e);
+        }
+        return null;
+    }
 }
