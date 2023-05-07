@@ -3,6 +3,7 @@ package org.waveapi.api.entities.entity.living;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.World;
+import org.waveapi.api.entities.EntityCastingType;
 import org.waveapi.api.entities.EntityCreation;
 import org.waveapi.api.entities.entity.EntityBase;
 
@@ -40,7 +41,9 @@ public class EntityLiving extends EntityBase {
         return ((LivingEntity)entity).getMaxHealth();
     }
 
-    public static EntityLiving of(Object obj) {
+    public final static EntityCastingType<EntityLiving> type = EntityCastingType.create(EntityLiving.class, EntityLiving::_of);
+
+    public static EntityLiving _of(Object obj) {
         if (obj instanceof LivingEntity e) {
             return new EntityLiving(e);
         }

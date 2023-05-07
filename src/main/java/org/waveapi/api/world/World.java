@@ -3,6 +3,7 @@ package org.waveapi.api.world;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import org.waveapi.api.entities.entity.EntityBase;
+import org.waveapi.api.items.block.blockentities.BlockEntityCastingType;
 import org.waveapi.api.items.block.blockentities.WaveTileEntity;
 import org.waveapi.api.items.inventory.ItemStack;
 import org.waveapi.api.math.BlockPos;
@@ -50,6 +51,20 @@ public class World {
                 e.printStackTrace();
                 return null;
             }
+        }
+    }
+
+    public <T> T getTileEntity(BlockPos pos, BlockEntityCastingType<T> type) {
+        BlockEntity entity = world.getBlockEntity(pos.pos);
+        if (entity instanceof WaveTileEntityBased) {
+            WaveTileEntity tile = ((WaveTileEntityBased) entity).getWaveTileEntity();
+            if (type.getClazz().isInstance(tile)) {
+                return (T)tile;
+            } else {
+                return null;
+            }
+        } else {
+            return (T)type.cast(entity);
         }
     }
 

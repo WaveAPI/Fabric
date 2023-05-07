@@ -6,6 +6,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import org.waveapi.api.entities.DamageSource;
+import org.waveapi.api.entities.EntityCastingType;
 import org.waveapi.api.entities.EntityCreation;
 import org.waveapi.api.entities.entity._mc.WaveEntityBased;
 import org.waveapi.api.math.BlockPos;
@@ -100,32 +101,16 @@ public class EntityBase {
         entity.tick();
     }
 
-    public static EntityBase of(Object obj) {
-        if (obj instanceof Entity b) {
-            return new EntityBase(b);
-        }
-        return null;
-    }
-
-    public <T> T _to(Class<T> type) {
+    public <T> T to(EntityCastingType<T> type) {
         if (entity instanceof WaveEntityBased) {
             EntityBase e = ((WaveEntityBased) entity).getWaveEntity();
-            if (type.isInstance(e)) {
+            if (type.getClazz().isInstance(e)) {
                 return (T)e;
             } else {
                 return null;
             }
         } else {
-            try {
-                return (T)type.getMethod("of", Object.class).invoke(null, entity);
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                e.printStackTrace();
-                return null;
-            }
+            return (T)type.cast(entity);
         }
-    }
-
-    public <T> T to(Class<T> type) {
-        return _to(type);
     }
 }

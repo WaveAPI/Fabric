@@ -2,6 +2,7 @@ package org.waveapi.api.entities.entity.living;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
+import org.waveapi.api.entities.EntityCastingType;
 import org.waveapi.api.items.inventory.ItemStack;
 import org.waveapi.api.math.Vector3;
 
@@ -37,7 +38,9 @@ public class EntityPlayer extends EntityLiving {
         return new Vector3(playerEntity.getRotationVector());
     }
 
-    public static EntityPlayer of(Object obj) {
+    public final static EntityCastingType<EntityPlayer> type = EntityCastingType.create(EntityPlayer.class, EntityLiving::_of);
+
+    public static EntityPlayer _of(Object obj) {
         if (obj instanceof PlayerEntity e) {
             return new EntityPlayer(e);
         }

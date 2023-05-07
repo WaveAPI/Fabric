@@ -3,10 +3,13 @@ package org.waveapi.api.items.block.blockentities.types;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import org.waveapi.api.items.block.blockentities.BlockEntityCastingType;
 import org.waveapi.api.items.block.blockentities.WaveTileEntity;
 import org.waveapi.utils.ItemUtils;
 
 public interface ContainerTile {
+
+    BlockEntityCastingType<ContainerTile> type = BlockEntityCastingType.create(ContainerTile.class, ContainerTile::of);
 
     int getSize();
     org.waveapi.api.items.inventory.ItemStack getStack(int slot);
