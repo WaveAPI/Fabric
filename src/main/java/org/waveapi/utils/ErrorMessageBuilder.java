@@ -8,9 +8,12 @@ import java.util.List;
 public class ErrorMessageBuilder {
     public static void create(String problem, List<String> content) {
         Logger log = LoggerFactory.getLogger("WaveAPI");
+        StringBuilder str = new StringBuilder();
         for (String c : content) {
-            log.error(c);
+            str.append("\n").append(c);
+            log.error("\n" + c);
         }
-        System.exit(0);
+        str.setLength(str.length() - 2);
+        throw new RuntimeException("Missing mods: " + str);
     }
 }
