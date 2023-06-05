@@ -6,13 +6,17 @@ import java.io.InputStream;
 
 public abstract class WaveMod {
 
-    public final String name;
-    public final String version;
+    public String name;
+    public String version;
 
     public WaveMod(String name, String version) {
         this.name = name;
         this.version = version;
 
+        WaveLoader.register(this);
+    }
+
+    public WaveMod() {
         WaveLoader.register(this);
     }
 

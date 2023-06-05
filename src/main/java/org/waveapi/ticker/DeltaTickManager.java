@@ -3,7 +3,7 @@ package org.waveapi.ticker;
 import org.waveapi.Main;
 import org.waveapi.MixinConfigPlugin;
 import org.waveapi.ticker.tickers.LimitedPerTick;
-import org.waveapi.utils.Yaml;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.FileInputStream;
