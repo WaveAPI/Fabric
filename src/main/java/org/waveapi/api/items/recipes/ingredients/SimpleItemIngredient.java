@@ -11,6 +11,8 @@ public class SimpleItemIngredient extends Ingredient {
 
     @Override
     public net.minecraft.recipe.Ingredient getVanilla() {
+        if (item._getItem() == null)
+            return net.minecraft.recipe.Ingredient.ofItems();
         return net.minecraft.recipe.Ingredient.ofItems(item._getItem());
     }
 }

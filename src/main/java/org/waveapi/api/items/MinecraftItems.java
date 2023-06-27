@@ -1228,8 +1228,8 @@ public class MinecraftItems {
     public static final WaveItem SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE = ItemHelper.of(Items.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE);
     public static final WaveItem RIB_ARMOR_TRIM_SMITHING_TEMPLATE = ItemHelper.of(Items.RIB_ARMOR_TRIM_SMITHING_TEMPLATE);
     public static final WaveItem SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE = ItemHelper.of(Items.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE);
-    public static final WaveItem POTTERY_SHARD_ARCHER = ItemHelper.of(Items.POTTERY_SHARD_ARCHER);
-    public static final WaveItem POTTERY_SHARD_PRIZE = ItemHelper.of(Items.POTTERY_SHARD_PRIZE);
-    public static final WaveItem POTTERY_SHARD_ARMS_UP = ItemHelper.of(Items.POTTERY_SHARD_ARMS_UP);
-    public static final WaveItem POTTERY_SHARD_SKULL = ItemHelper.of(Items.POTTERY_SHARD_SKULL);
+    public static final WaveItem POTTERY_SHARD_ARCHER = ItemHelper.of(Items.ARCHER_POTTERY_SHERD);
+    public static final WaveItem POTTERY_SHARD_PRIZE = ItemHelper.of(Items.PRIZE_POTTERY_SHERD);
+    public static final WaveItem POTTERY_SHARD_ARMS_UP = ItemHelper.of(Items.ARMS_UP_POTTERY_SHERD);
+    public static final WaveItem POTTERY_SHARD_SKULL = ItemHelper.of(Items.SKULL_POTTERY_SHERD);
 }

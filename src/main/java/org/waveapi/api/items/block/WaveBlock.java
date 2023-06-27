@@ -50,7 +50,7 @@ public class WaveBlock extends WaveItem {
 
     public WaveBlock(String id, WaveMod mod, BlockMaterial material) {
         super(id, mod);
-        this.blockSettings = FabricBlockSettings.of(material.mat);
+        this.blockSettings = FabricBlockSettings.copyOf(material.mat);
     }
 
     public WaveBlock(String id, WaveMod mod) {

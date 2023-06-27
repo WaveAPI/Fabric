@@ -93,7 +93,7 @@ public class EntityBase {
     }
 
     public org.waveapi.api.world.World getWorld() {
-        return new org.waveapi.api.world.World(this.entity.world);
+        return new org.waveapi.api.world.World(this.entity.getWorld());
     }
 
     public void tick() {
