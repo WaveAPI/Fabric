@@ -167,6 +167,7 @@ public class WaveLoader {
             } else if (req instanceof List) {
                 needs = (List<Object>) req;
             } else {
+                deps.put(mod.id, new ArrayList<>());
                 continue;
             }
 
@@ -185,7 +186,6 @@ public class WaveLoader {
 
                             @Override
                             public boolean check() {
-                                System.out.println(deps.containsKey(dep) || externalDeps.contains(dep));
                                 return deps.containsKey(dep) || externalDeps.contains(dep);
                             }
 
