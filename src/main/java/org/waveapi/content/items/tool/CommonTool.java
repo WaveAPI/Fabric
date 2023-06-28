@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.world.World;
+import org.waveapi.api.entities.entity.living.EntityLiving;
 import org.waveapi.api.items.WaveItem;
 import org.waveapi.api.items.tools.WaveCommonToolItem;
 
@@ -25,7 +26,7 @@ public class CommonTool extends SwordItem {
                 new org.waveapi.api.world.World(world),
                 new org.waveapi.api.world.BlockState(state),
                 new org.waveapi.api.math.BlockPos(pos),
-                (org.waveapi.api.entities.entity.living.EntityLiving) org.waveapi.content.entity.EntityHelper.wrap(miner))) {
+                new EntityLiving(miner))) {
             return super.postMine(stack, world, state, pos, miner);
         }
 

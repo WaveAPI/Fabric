@@ -1,4 +1,4 @@
-package org.waveapi.content.entity.wraps.living;
+package org.waveapi.api.entities.entity._mc.wraps.living;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

@@ -4,6 +4,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.math.BlockPos;
+import org.waveapi.api.entities.entity.EntityBase;
+import org.waveapi.api.entities.entity._mc.WaveEntityBased;
 import org.waveapi.api.misc.NBT;
 import org.waveapi.api.world.World;
 
@@ -40,6 +42,19 @@ public class WaveTileEntity {
 
     public org.waveapi.api.math.BlockPos getPosition() {
         return new org.waveapi.api.math.BlockPos(blockEntity.getPos());
+    }
+
+    public <T> T to(BlockEntityCastingType<T> type) {
+        if (blockEntity instanceof WaveEntityBased) {
+            EntityBase e = ((WaveEntityBased) blockEntity).getWaveEntity();
+            if (type.getClazz().isInstance(e)) {
+                return (T)e;
+            } else {
+                return null;
+            }
+        } else {
+            return (T)type.cast(blockEntity);
+        }
     }
 
 }

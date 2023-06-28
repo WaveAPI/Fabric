@@ -1,4 +1,4 @@
-package org.waveapi.content.entity.wraps;
+package org.waveapi.api.entities.entity._mc.wraps;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

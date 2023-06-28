@@ -6,7 +6,9 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import org.waveapi.api.entities.DamageSource;
+import org.waveapi.api.entities.EntityCastingType;
 import org.waveapi.api.entities.EntityCreation;
+import org.waveapi.api.entities.entity._mc.WaveEntityBased;
 import org.waveapi.api.math.BlockPos;
 import org.waveapi.api.math.Vector3;
 
@@ -97,5 +99,18 @@ public class EntityBase {
     public void tick() {
         superWrap = true;
         entity.tick();
+    }
+
+    public <T> T to(EntityCastingType<T> type) {
+        if (entity instanceof WaveEntityBased) {
+            EntityBase e = ((WaveEntityBased) entity).getWaveEntity();
+            if (type.getClazz().isInstance(e)) {
+                return (T)e;
+            } else {
+                return null;
+            }
+        } else {
+            return (T)type.cast(entity);
+        }
     }
 }
