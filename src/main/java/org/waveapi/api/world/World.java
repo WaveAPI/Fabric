@@ -81,4 +81,8 @@ public class World {
         world.breakBlock(pos.pos, shouldDrop, entity.entity);
     }
 
+    public boolean isBlockSolid(BlockPos pos) {
+        return !world.getBlockState(pos.pos).getCollisionShape(world, pos.pos).isEmpty();
+    }
+
 }

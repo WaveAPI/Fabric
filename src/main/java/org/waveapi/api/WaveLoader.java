@@ -33,8 +33,6 @@ public class WaveLoader {
 
     public static Map<String, WrappedWaveMod> mods = new LinkedHashMap<>();
 
-    private static WrappedWaveMod next;
-
     public static Map<String, Dependency> extraDeps = new HashMap<>() {
         {
             put("kotlin!", new Dependency() {
@@ -246,15 +244,20 @@ public class WaveLoader {
 
         for (WrappedWaveMod wrap : modsToLoad) {
             try {
-                next = wrap;
                 Object mainObject = wrap.params.get("main");
                 if (mainObject instanceof String) {
                     String main = (String) wrap.params.get("main");
                     Class<?> c = classLoader.loadClass(main);
 
-                    c.getConstructor().newInstance();
+                    Object reg = c.getConstructor().newInstance();
+                    if (reg instanceof WaveMod) {
+                        wrap.mod = (WaveMod) reg;
+                        register(wrap);
+                    } else {
+                        Main.LOGGER.error("Mod " + wrap.file.getName() + " has main not extending WaveMod");
+                    }
                 } else {
-                    Main.LOGGER.info("Mod " + wrap.file.getName() + " has bad main path");
+                    Main.LOGGER.error("Mod " + wrap.file.getName() + " has bad main path");
                 }
             } catch (Exception e) {
                     throw new RuntimeException("Failed in pre-init of waveAPI mod [" + wrap.file.getName() + "]", e);
@@ -263,27 +266,28 @@ public class WaveLoader {
 
     }
 
-    public static void register(WaveMod mod) {
-        next.mod = mod;
-        mods.put(mod.name, next);
+    public static void register(WrappedWaveMod wrap) {
+        WaveMod mod = wrap.mod;
 
-        Object version = next.params.get("version");
+        Object version = wrap.params.get("version");
         if (version != null) {
             mod.version = version.toString();
         }
 
-        Object id = next.params.get("id");
+        Object id = wrap.params.get("id");
         if (id != null) {
             mod.name = id.toString();
         }
 
         if (mod.name == null) {
-            throw new RuntimeException("Mod [" + next.file.getName() + "] is missing an ID");
+            throw new RuntimeException("Mod [" + wrap.file.getName() + "] is missing an ID");
         }
 
         if (!mod.name.matches("[a-z0-9_]+")) {
             throw new RuntimeException("Bad mod ID [" + mod.name + "] It contains a character which doesn't match [a-z0-9_]");
         }
+
+        mods.put(mod.name, wrap);
     }
 
 }
