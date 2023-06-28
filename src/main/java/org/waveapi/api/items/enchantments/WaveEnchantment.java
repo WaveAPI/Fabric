@@ -1,13 +1,12 @@
 package org.waveapi.api.items.enchantments;
 
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.entities.entity.EntityBase;
 import org.waveapi.api.entities.entity.living.EntityLiving;
-import org.waveapi.api.items.Rarity;
 import org.waveapi.api.items.enchantments._wrap.EnchantmentWrapper;
 import org.waveapi.content.resources.LangManager;
 
@@ -19,7 +18,7 @@ public class WaveEnchantment {
     private final String name;
     private final WaveMod mod;
     public final EnchantmentTarget target;
-    public Rarity rarity = Rarity.COMMON;
+    public Enchantment.Rarity rarity = Enchantment.Rarity.COMMON;
     public List<net.minecraft.entity.EquipmentSlot> slots = new ArrayList<>();
 
     public boolean isTreasure = false;
@@ -32,7 +31,7 @@ public class WaveEnchantment {
 
     public void _register () {
         this._mc = new EnchantmentWrapper(this);
-        Registry.register(Registries.ENCHANTMENT, new Identifier(mod.name, name), _mc);
+        Registry.register(Registry.ENCHANTMENT, new Identifier(mod.name, name), _mc);
     }
     public WaveEnchantment(String name, EnchantmentTarget target, WaveMod mod) {
         this.name = name;
@@ -43,8 +42,8 @@ public class WaveEnchantment {
 
     }
 
-    public WaveEnchantment setRarity(Rarity rarity) {
-        this.rarity = rarity;
+    public WaveEnchantment setRarity(org.waveapi.api.items.Rarity rarity) {
+        this.rarity = rarity.enchRar;
         return this;
     }
 

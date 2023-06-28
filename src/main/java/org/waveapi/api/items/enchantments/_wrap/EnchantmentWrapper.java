@@ -19,7 +19,7 @@ public class EnchantmentWrapper extends Enchantment {
     private final WaveEnchantment wave;
 
     public EnchantmentWrapper(WaveEnchantment enchantment) {
-        super(enchantment.rarity.enchRar,
+        super(enchantment.rarity,
                 enchantment.target._mc,
                 null);
         this.wave = enchantment;

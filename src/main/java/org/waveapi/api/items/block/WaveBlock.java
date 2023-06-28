@@ -8,7 +8,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.waveapi.Main;
 import org.waveapi.api.WaveMod;
 import org.waveapi.api.entities.entity.living.EntityPlayer;
 import org.waveapi.api.items.ItemUseResult;
@@ -109,7 +108,7 @@ public class WaveBlock extends WaveItem {
                                 (pos, state) -> {
                                     try {
                                         TileEntityCreation creation = new TileEntityCreation(tile, pos, state, (BlockEntityType) type.get(block));
-                                        return ((TileEntityBlock) this).getTileEntity().getConstructor(TileEntityCreation.class).newInstance (creation).blockEntity;
+                                        return ((org.waveapi.api.items.block.blockentities.WaveTileEntity)((TileEntityBlock) this).getTileEntity().getConstructor(TileEntityCreation.class).newInstance (creation)).blockEntity;
                                     } catch (IllegalAccessException | InvocationTargetException |
                                              InstantiationException | NoSuchMethodException e) {
                                         throw new RuntimeException(e);
